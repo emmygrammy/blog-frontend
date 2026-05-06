@@ -5,23 +5,26 @@ import BlogContent from '../pages/BlogContent'
 import About from '../pages/About'
 import Contact from '../pages/Contact'
 import NotFound from '../pages/NotFound'
-
-
+import MainLayout from '../layouts/MainLayout'
 
 const AppRoutes = () => {
-    return (
-        <BrowserRouter>
-            <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/blogs" element={<Blogs />} />
-                <Route path="/blogs/:id" element={<BlogContent />} />
-                <Route path="/about" element={<About />} />
-                <Route path="/contact" element={<Contact />} />
-            </Routes>
-            
-             <Route path="*" element={<NotFound />} />
-        </BrowserRouter>
-    )
+  return (
+    <BrowserRouter>
+      <Routes>
+        {/* Layout Wrapper */}
+        <Route path="/" element={<MainLayout />}>
+          <Route index element={<Home />} />
+          <Route path="blogs" element={<Blogs />} />
+          <Route path="blogs/:id" element={<BlogContent />} />
+          <Route path="about" element={<About />} />
+          <Route path="contact" element={<Contact />} />
+        </Route>
+
+        {/* 404 Page */}
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </BrowserRouter>
+  )
 }
 
 export default AppRoutes
