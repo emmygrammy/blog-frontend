@@ -6,7 +6,9 @@ function MainLayout() {
     return (
         <>
             <Navbar />
-            <Outlet />
+            <main className="container mx-auto px-4">
+                <Outlet />
+            </main>
             <Footer />
         </>
     )
