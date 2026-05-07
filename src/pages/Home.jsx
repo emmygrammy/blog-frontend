@@ -1,7 +1,7 @@
 
 function Home() {
   return (
-    <div className="bg-red-500 p-4">
+    <div className=" p-4">
       <h1 className="text-3xl font-bold text-sans text-primary">
           home page 🚀
       </h1>

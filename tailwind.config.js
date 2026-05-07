@@ -7,7 +7,7 @@ export default {
   theme: {
     extend: {
       colors: {
-        primary: "#ef4444",
+        primary: "#EF767A",
         primaryHover: "#FF7A90",
 
         secondary: "#0F52BA",
@@ -18,12 +18,14 @@ export default {
 
         textPrimary: "#000000",
         textSecondary: "#6B6B6B",
+        textTertiary: "#FFFFFF",
 
         border: "#E0E0E0"
       },
 
       fontFamily: {
         sans: ["Inter", "sans-serif"],
+        heading: ["Poppins", "sans-serif"],
       },
 
       fontSize: {
