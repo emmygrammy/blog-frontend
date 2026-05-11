@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import appstore from '../assets/appstore.svg';
 import googleplay from '../assets/googleplay.svg';
+import { FaYoutube, FaWhatsapp, FaFacebook } from "react-icons/fa";
 
 
 
@@ -24,18 +25,27 @@ export function Footer1(){
       <div className="col-span-1">
         {/* upper part */}
         <div>
-          <h1 className="text-2xl font-heading font-bold text-secondary font-Poppins">LearnLiftApp</h1>
-          <p className="text-white/80 mt-2 text-sm">A modern blog platform built for learning and sharing ideas.</p>
+          <h1 className="text-2xl font-bold text-secondary font-heading ">LearnLiftApp</h1>
+          <p className="text-white/90 font-sans mt-2 text-lg"
+          >Lifting learners to develop a growth mindset and a lifelong love for learning.</p>
         </div>
 
            {/* lower part */}
          <div className="mt-8">
-          <h3 className="text-lg font-semibold mb-3 text-secondary">Follow Us</h3>
+          <h3 className="text-lg font-bold mb-3 font-heading  text-secondary">Follow Us</h3>
           <div className="flex space-x-4 text-white/80">
-            <a href="#" className="hover:underline">YouTube</a>
-            <a href="#" className="hover:underline">WhatsApp</a>
-            <a href="#" className="hover:underline">Facebook</a>
-          </div>
+                <a href="#" className="hover:text-red-500 transition">
+                  <FaYoutube size={40} />
+                </a>
+
+                <a href="#" className="hover:text-green-500 transition">
+                  <FaWhatsapp size={40} />
+                </a>
+
+                <a href="#" className="hover:text-blue-500 transition">
+                  <FaFacebook size={40} />
+                </a>
+              </div>
         </div>
 
 
@@ -46,24 +56,24 @@ export function Footer1(){
           {/* column 2 */}
           <div className="col-span-1 md:px-16">
             <div>
-              <h3 className="text-lg font-semibold mb-3 text-secondary">Quick Links</h3>
+              <h3 className="text-lg font-bold mb-3 font-heading  text-secondary">Quick Links</h3>
               <ul className="space-y-2 text-white/80">
-                <li><Link to="/" className="hover:underline">Home</Link></li>
-                <li><Link to="/blogs" className="hover:underline">Blogs</Link></li>
-                <li><Link to="/about" className="hover:underline">About</Link></li>
-                <li><Link to="/contact" className="hover:underline">Contact</Link></li>
+                <li><Link to="/" className="hover:underline font-sans text-lg semibold text-white/90">Home</Link></li>
+                <li><Link to="/blogs" className="hover:underline font-sans text-lg semibold text-white/90">Blogs</Link></li>
+                <li><Link to="/about" className="hover:underline font-sans text-lg semibold text-white/90">About</Link></li>
+                <li><Link to="/contact" className="hover:underline font-sans text-lg semibold text-white/90">Contact</Link></li>
               </ul>
             </div>
           </div>
           {/* column 3  product help*/}
           <div>
             <div>
-              <h3 className="text-lg font-semibold mb-3 text-secondary">Product Help</h3>
+              <h3 className="text-lg font-bold mb-3 font-heading  text-secondary">Product Help</h3>
               <ul className="space-y-2 text-white/80">
-                <li><Link to="/contact" className="hover:underline">Contact</Link></li>
-                <li><Link to="/faq" className="hover:underline">FAQ</Link></li>
-                <li><Link to="/terms" className="hover:underline">Terms of Service</Link></li>
-                <li><Link to="/privacy" className="hover:underline">Privacy Policy</Link></li>
+                <li><Link to="/contact" className="hover:underline font-sans text-lg semibold text-white/90">Contact</Link></li>
+                <li><Link to="/faq" className="hover:underline font-sans text-lg semibold text-white/90">FAQ</Link></li>
+                <li><Link to="/terms" className="hover:underline font-sans text-lg semibold text-white/90">Terms of Service</Link></li>
+                <li><Link to="/privacy" className="hover:underline font-sans text-lg semibold text-white/90">Privacy Policy</Link></li>
               </ul>
             </div>
           </div>
@@ -73,8 +83,8 @@ export function Footer1(){
           {/* column 4 */}
           <div className="col-span-1 ">
             <div>
-              <h3 className="text-lg font-semibold mb-3 text-secondary">Download Our App</h3>
-              <p className="text-white/80 -mb-10">
+              <h3 className="text-lg font-bold mb-3 font-heading  text-secondary">Download Our App</h3>
+              <p className="text-white/90 -mb-10 font-sans text-lg">
                 Get the latest updates and features by downloading our app.
               </p>
 

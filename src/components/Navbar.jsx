@@ -50,7 +50,7 @@ function Navbar() {
               type="text"
               placeholder="Search"
               className="
-                w-full md:w-60 h-10
+                w-full md:w-80 h-10
                 pl-10 pr-4
                 border border-gray-300
                 rounded-md
@@ -64,7 +64,7 @@ function Navbar() {
         </div>
 
         {/* Desktop Menu */}
-        <div className="font-popins hidden md:flex items-center space-x-6 text-lg">
+        <div className="font-heading hidden md:flex items-center space-x-6 text-xl">
           {navLinks.map((link) => (
             <NavLink
               key={link.path}
@@ -85,7 +85,7 @@ function Navbar() {
 
       {/* Mobile Menu */}
       {isOpen && (
-        <div className="md:hidden px-4 pb-4 space-y-3 bg-surface shadow-sm">
+        <div className="md:hidden px-4 pb-4 space-y-3 bg-surface shadow-sm font-heading text-xl">
           {navLinks.map((link) => (
             <NavLink
               key={link.path}
