@@ -2,12 +2,12 @@ import pic1 from '../assets/pic1.jpg'
 
 function HeroSection() {
   return (
-    <div className="grid gap-10 items-center  md:grid-cols-2">
+    <div className="grid gap-10 items-center md:grid-cols-2">
 
         {/* left part of hero section */}
-        <div>
-            <h1 className="text-3xl font-bold text-sans text-primary">
-                LEARN LIFT APP
+        <div className="px-10 py-16">
+            <h1 className="text-xl font-bold text-heading text-primary italic text-center mb-16 container rounded-xl bg-secondary">
+                LearnLift App
             </h1>
 
              <span className="text-3xl font-bold text-sans text-primary">
