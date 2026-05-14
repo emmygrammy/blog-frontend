@@ -13,7 +13,8 @@ export default {
         secondary: "#0F52BA",
         secondaryHover: "#0C45A0",
 
-        background: "#F4F4F4",
+        background: "#FFFFFF",
+        primaryDark: "#0B1C30",
         surface: "#FFFFFF",
 
         textPrimary: "#000000",
