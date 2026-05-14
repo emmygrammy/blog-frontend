@@ -7,7 +7,7 @@ import { FaYoutube, FaWhatsapp, FaFacebook } from "react-icons/fa";
 
 export default function Footer() {
     return (
-        <footer className="bg-primary  ">
+        <footer className="bg-primaryDark  ">
            <div className="container mx-auto px-4 ">
              <Footer1 />
              <Footer2 />

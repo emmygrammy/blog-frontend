@@ -4,10 +4,10 @@ import { motion } from "framer-motion";
 
 function HeroSection() {
   return (
-    <section className="bg-white py-16">
+    <section className="px-4 md:px-10 py-6">
       
       {/* CONTAINER (proper spacing for mobile + desktop) */}
-      <div className="container mx-auto px-6 md:px-10 shadow-md rounded-3xl py-16">
+      <div className="container px-6 md:px-10 mx-auto shadow-md rounded-3xl py-16 border-2 border-primary ">
 
         {/* GRID */}
         <div className="grid items-center gap-12 md:grid-cols-2">
@@ -22,7 +22,7 @@ function HeroSection() {
           >
 
             {/* BADGE */}
-            <h1 className="bg-primaryDark text-white text-center font-heading text-lg px-6 py-3 rounded-full shadow-lg block mb-8 mx-auto w-1/2">
+            <h1 className="bg-indigo-600 text-white text-center font-heading text-lg px-6 py-3 rounded-full shadow-lg block mb-8 mx-auto md:w-1/2">
               LearnLift App
             </h1>
 

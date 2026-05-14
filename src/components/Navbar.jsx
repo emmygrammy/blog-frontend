@@ -14,7 +14,7 @@ function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <nav className="bg-surface shadow-md fixed top-0 left-0 right-0 z-50">
+    <nav className="bg-surface shadow-md fixed top-0 left-0 right-0 z-50 h-[70px] md:h-[90px]">
       <div className="container mx-auto flex flex-col md:flex-row md:items-center md:justify-between p-4 gap-3">
         
         {/* Top Row */}

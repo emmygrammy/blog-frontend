@@ -10,7 +10,7 @@ export default {
         primary: "#EF767A",
         primaryHover: "#FF7A90",
 
-        secondary: "#0F52BA",
+        secondary: "#0058BE",
         secondaryHover: "#0C45A0",
 
         background: "#FFFFFF",
@@ -21,7 +21,7 @@ export default {
         textSecondary: "#6B6B6B",
         textTertiary: "#FFFFFF",
 
-        border: "#E0E0E0"
+        border: "#EF767A"
       },
 
       fontFamily: {
