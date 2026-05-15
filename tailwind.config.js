@@ -8,7 +8,7 @@ export default {
     extend: {
       colors: {
         primary: "#EF767A",
-        primaryHover: "#FF7A90",
+        primaryHover: "#A23B42",
 
         secondary: "#0058BE",
         secondaryHover: "#0C45A0",

@@ -4,27 +4,27 @@ const stats = [
   {
     value: "35,000+",
     label: "Students",
-    color: "text-indigo-600"
+    color: "text-primaryHover"
   },
-  {
-    value: "98%",
-    label: "Pass Rate",
-    color: "text-green-600"
-  },
+  // {
+  //   value: "98%",
+  //   label: "Pass Rate",
+  //   color: "text-secondary"
+  // },
   {
     value: "5000+",
     label: "Video Lessons",
-    color: "text-blue-600"
+    color: "text-secondary"
   },
   {
     value: "550+",
     label: "Study Notes",
-    color: "text-purple-600"
+    color: "text-primaryHover"
   },
   {
     value: "20,000+",
     label: "CBT Questions",
-    color: "text-pink-600"
+    color: "text-secondary"
   }
 ];
 
@@ -40,7 +40,7 @@ function Statistics() {
              <div className="w-24 h-1 bg-indigo-600 rounded-full mx-auto mb-8 "></div>
 
                {/* Statistics Grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-6 text-center">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 text-center">
             {stats.map((item, index) => (
                 <div key={index}>
                 <h2 className={`text-2xl md:text-4xl font-bold ${item.color}`}>
