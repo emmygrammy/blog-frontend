@@ -1,33 +1,72 @@
+import pry from '../assets/pry.jpg'
+import sec from '../assets/sec.jpg'
+import jamb from '../assets/jamb.jpg'
+import uni from '../assets/uni.jpg'
 
-function EducationPlan(){
+  const stages = [
+    {
+      stage: "Primary",
+      description: "Quality video lessons for primary learners",
+      pic: pry,
+    },
+    {
+      stage: "Secondary",
+      description: "Interactive learning resources for secondary students",
+      pic: sec,
+    },
+    {
+      stage: "Jamb and WAEC",
+      description: "Comprehensive courses for Jamb, Waec, Neco, School of nursing students",
+      pic: jamb,
+    },
+    {
+      stage: "University",
+      description: "Comprehensive courses for university students",
+      pic: uni,
+    },
+  ];
+
+
+
+
+function EducationPlan() {
   return (
-    <div className="px-10 py-16">
-
-
-        { /* 1. parent container */}
-        <div className="container mx-auto px-4 bg-rose-50 rounded-3xl shadow-md p-12">
+    <section className="py-16 px-6 bg-gray-200">
       
-      <h2 className="text-2xl font-bold font-heading text-indigo-600 text-center">
-        Education Plan
-      </h2>
-
-      {/* underline */}
-      <div className="w-12 h-2 bg-indigo-600 rounded-full mx-auto "></div>
-
-      <div className="grid md:grid-cols-4 gap-8 mt-12">
-        <div className="bg-white p-8 rounded-md shadow-md">
-          <h3 className="text-lg font-bold text-indigo-600">Free</h3>
-          <p className="text-sans text-lg">
-            Start with a free trial and explore the features of LearnLiftApp.
-          </p>
-        </div>
+      {/* heading */}
+      <div className="text-center mb-10">
+        <h2 className="text-3xl font-bold text-gray-800">
+          Our Education Plan
+        </h2>
       </div>
 
+      {/* cards */}
+      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        {stages.map((item, index) => (
+          <div
+            key={index}
+            className="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition duration-300"
+          >
+            <img
+              src={item.pic}
+              alt={item.stage}
+              className="w-full h-52 object-cover"
+            />
 
+            <div className="p-5">
+              <h2 className="text-xl font-bold text-gray-800 mb-2">
+                {item.stage}
+              </h2>
 
-     </div>
-    </div>
-  )
+              <p className="text-gray-600 text-sm leading-relaxed">
+                {item.description}
+              </p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
 }
 
-export default EducationPlan
+export default EducationPlan;
