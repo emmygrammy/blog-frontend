@@ -1,13 +1,14 @@
-import pic1 from '../assets/pic1.jpg'
+import p1 from '../assets/phone/p1.jpeg'
+
 import { FaCheck } from "react-icons/fa";
 import { motion } from "framer-motion";
 
 function HeroSection() {
   return (
-    <section className="px-4 md:px-10 py-6">
+    <section className="bg-gray-200 px-4 md:px-10 py-6">
       
       {/* CONTAINER (proper spacing for mobile + desktop) */}
-      <div className="container px-6 md:px-10 mx-auto shadow-md rounded-3xl py-16 border-2 border-primary ">
+      <div className=" container px-6 md:px-10 shadow-md rounded-3xl py-16 border-2 ">
 
         {/* GRID */}
         <div className="grid items-center gap-12 md:grid-cols-2">
@@ -75,7 +76,7 @@ function HeroSection() {
             className="flex justify-center"
           >
             <img
-              src={pic1}
+              src={p1}
               alt="heroimg"
               className="w-full max-w-xl rounded-2xl "
             />
