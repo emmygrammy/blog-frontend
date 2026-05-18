@@ -10,7 +10,7 @@ export default {
         primary: "#EF767A",
         primaryHover: "#A23B42",
 
-        secondary: "#0058BE",
+        secondary: "##4F46E5",
         secondaryHover: "#0C45A0",
 
         background: "#FFFFFF",
