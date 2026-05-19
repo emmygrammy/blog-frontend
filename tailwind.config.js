@@ -16,7 +16,7 @@ export default {
         background: "#FFFFFF",
         primaryDark: "#0B1C30",
         surfaceVariant: "#DBEAFE",
-        surfaceHover: "#EEF2FF",
+        surfaceHover: "#F0F3FF",
 
         textPrimary: "#000000",
         textSecondary: "#6B6B6B",

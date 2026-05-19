@@ -18,11 +18,9 @@ function VideoSlider() {
       url: "https://www.youtube.com/embed/dQw4w9WgXcQ",
     },
     {
-      
-    title: "Physics Fundamentals",
-    url: "https://www.youtube.com/embed/_c6SA4B7uf8",
-  },
-    
+      title: "Physics Fundamentals",
+      url: "https://www.youtube.com/embed/_c6SA4B7uf8",
+    },
     {
       title: "Chemistry Essentials",
       url: "https://www.youtube.com/embed/dQw4w9WgXcQ",
@@ -38,12 +36,12 @@ function VideoSlider() {
   ];
 
   return (
-    <section className="py-16 px-6 bg-gray-50">
-      <div className="max-w-6xl mx-auto">
+    <section className="py-16 px-6 bg-surfaceHover">
+      <div className="max-w-7xl mx-auto">
 
-        {/* heading */}
+        {/* Heading */}
         <div className="text-center mb-10">
-          <h2 className="text-3xl font-bold text-gray-800">
+          <h2 className="text-2xl font-bold font-heading text-gray-800">
             Watch Video Lessons
           </h2>
           <p className="text-gray-600 mt-2">
@@ -51,19 +49,28 @@ function VideoSlider() {
           </p>
         </div>
 
-        {/* slider */}
+        {/* Slider */}
         <Swiper
           modules={[Navigation, Autoplay]}
           spaceBetween={20}
-          slidesPerView={1}
           autoplay={{
             delay: 2500,
             disableOnInteraction: false,
           }}
+
+          // 🔥 IMPORTANT FIX HERE
           breakpoints={{
-            768: { slidesPerView: 2 },
-            1024: { slidesPerView: 3 },
+            0: {
+              slidesPerView: 1,
+            },
+            640: {
+              slidesPerView: 2,
+            },
+            1024: {
+              slidesPerView: 4, // ✅ 4 videos on desktop
+            },
           }}
+
           onSwiper={(swiper) => {
             setTimeout(() => {
               swiper.params.navigation.prevEl = prevRef.current;
@@ -78,16 +85,16 @@ function VideoSlider() {
           {videos.map((video, index) => (
             <SwiperSlide key={index}>
               <div className="bg-white rounded-2xl shadow-md overflow-hidden">
-                
+
                 <iframe
-                  className="w-full h-56"
+                  className="w-full h-48"
                   src={video.url}
                   title={video.title}
                   allowFullScreen
                 />
 
-                <div className="p-4">
-                  <h3 className="font-semibold text-gray-800">
+                <div className="p-3">
+                  <h3 className="font-semibold text-gray-800 text-sm">
                     {video.title}
                   </h3>
                 </div>
@@ -97,21 +104,21 @@ function VideoSlider() {
           ))}
         </Swiper>
 
-        {/* navigation buttons */}
+        {/* Navigation */}
         <div className="flex justify-center items-center gap-6 mt-8">
 
           <button
             ref={prevRef}
-            className="w-12 h-12 flex items-center justify-center rounded-full bg-white shadow-md text-primary hover:bg-primary hover:text-white transition"
+            className="w-10 h-10 flex items-center justify-center rounded-full bg-white shadow-md text-primary hover:bg-primary hover:text-white transition"
           >
-            <FaLessThan size={18} />
+            <FaLessThan size={14} />
           </button>
 
           <button
             ref={nextRef}
-            className="w-12 h-12 flex items-center justify-center rounded-full bg-white shadow-md text-primary hover:bg-primary hover:text-white transition"
+            className="w-10 h-10 flex items-center justify-center rounded-full bg-white shadow-md text-primary hover:bg-primary hover:text-white transition"
           >
-            <FaGreaterThan size={18} />
+            <FaGreaterThan size={14} />
           </button>
 
         </div>

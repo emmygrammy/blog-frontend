@@ -14,48 +14,39 @@ function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <nav className="bg-surface shadow-md fixed top-0 left-0 right-0 z-50 h-[70px] md:h-[90px]">
-      <div className="container mx-auto flex flex-col md:flex-row md:items-center md:justify-between p-4 gap-3">
-        
-        {/* Top Row */}
+    <nav className="bg-surface shadow-md sticky top-0 z-50">
+
+      <div className="container mx-auto flex flex-col md:flex-row md:items-center md:justify-between px-4 py-3 gap-3">
+
+        {/* TOP ROW (logo + menu button) */}
         <div className="flex items-center justify-between w-full md:w-auto">
-          
-          {/* Logo */}
+
           <Link to="/">
             <img className="h-8" src={Logo} alt="LearnLiftApp" />
           </Link>
 
-          {/* Mobile Toggle */}
           <button
             className="md:hidden text-textPrimary"
             onClick={() => setIsOpen(!isOpen)}
           >
-            {isOpen ? (
-              <X className="size-7" />
-            ) : (
-              <Menu className="size-7" />
-            )}
+            {isOpen ? <X className="size-7" /> : <Menu className="size-7" />}
           </button>
         </div>
 
-        {/* Search */}
-        <div className="w-full md:w-auto">
-          <div className="relative">
-            
-            {/* Search Icon */}
+        {/* SEARCH (mobile + desktop) */}
+        <div className="w-full md:flex md:justify-center">
+          <div className="relative w-full md:w-96">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-textSecondary size-4" />
 
-            {/* Input */}
             <input
               type="text"
               placeholder="Search"
               className="
-                w-full md:w-80 h-10
+                w-full h-10
                 pl-10 pr-4
                 border border-gray-300
                 rounded-md
                 outline-none
-                transition-all duration-200
                 focus:border-primary
                 focus:ring-2 focus:ring-primary/30
               "
@@ -63,17 +54,15 @@ function Navbar() {
           </div>
         </div>
 
-        {/* Desktop Menu */}
-        <div className="font-heading hidden md:flex items-center space-x-6 text-xl">
+        {/* DESKTOP NAV */}
+        <div className="hidden md:flex items-center gap-6 font-heading text-lg">
           {navLinks.map((link) => (
             <NavLink
               key={link.path}
               to={link.path}
               className={({ isActive }) =>
-                `font-medium transition-colors duration-200 ${
-                  isActive
-                    ? "text-primary"
-                    : "text-textPrimary"
+                `font-medium transition-colors ${
+                  isActive ? "text-primary" : "text-textPrimary"
                 } hover:text-primary`
               }
             >
@@ -83,19 +72,17 @@ function Navbar() {
         </div>
       </div>
 
-      {/* Mobile Menu */}
+      {/* MOBILE MENU */}
       {isOpen && (
-        <div className="md:hidden px-4 pb-4 space-y-3 bg-surface shadow-sm font-heading text-xl">
+        <div className="md:hidden px-4 py-4 space-y-4 bg-surface shadow-sm font-heading text-lg">
           {navLinks.map((link) => (
             <NavLink
               key={link.path}
               to={link.path}
               onClick={() => setIsOpen(false)}
               className={({ isActive }) =>
-                `block font-medium transition-colors duration-200 ${
-                  isActive
-                    ? "text-primary"
-                    : "text-textPrimary"
+                `block font-medium ${
+                  isActive ? "text-primary" : "text-textPrimary"
                 } hover:text-primary`
               }
             >

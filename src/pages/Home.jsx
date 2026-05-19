@@ -18,10 +18,11 @@ function Home() {
       <HeroSection />
       <Statistics />
       <ContentSection />
-      <VideoSlider />
-      <FoundersSection />
       <ImageSlider />
       <EducationPlan />
+      <VideoSlider />
+      <FoundersSection />
+      
       <TestimonialSection />
       <FAQSection/>
     </>
