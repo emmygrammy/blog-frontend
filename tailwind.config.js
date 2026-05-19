@@ -10,12 +10,13 @@ export default {
         primary: "#EF767A",
         primaryHover: "#A23B42",
 
-        secondary: "##4F46E5",
+        secondary: "#4F46E5",
         secondaryHover: "#0C45A0",
 
         background: "#FFFFFF",
         primaryDark: "#0B1C30",
-        surface: "#FFFFFF",
+        surfaceVariant: "#DBEAFE",
+        surfaceHover: "#EEF2FF",
 
         textPrimary: "#000000",
         textSecondary: "#6B6B6B",
