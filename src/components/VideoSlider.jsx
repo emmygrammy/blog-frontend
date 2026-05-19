@@ -9,31 +9,39 @@ function VideoSlider() {
   const nextRef = useRef(null);
 
   const videos = [
-    {
-      title: "Introduction to Biology",
-      url: "https://www.youtube.com/embed/dQw4w9WgXcQ",
-    },
-    {
-      title: "Math Basics",
-      url: "https://www.youtube.com/embed/dQw4w9WgXcQ",
-    },
-    {
-      title: "Physics Fundamentals",
-      url: "https://www.youtube.com/embed/_c6SA4B7uf8",
-    },
-    {
-      title: "Chemistry Essentials",
-      url: "https://www.youtube.com/embed/dQw4w9WgXcQ",
-    },
-    {
-      title: "English Grammar",
-      url: "https://www.youtube.com/embed/dQw4w9WgXcQ",
-    },
-    {
-      title: "Computer Basics",
-      url: "https://www.youtube.com/embed/dQw4w9WgXcQ",
-    },
-  ];
+  {
+    title: "Chemistry",
+    url: "https://www.youtube.com/embed/FeUkIPLoqlE",
+  },
+  {
+    title: "Biology",
+    url: "https://www.youtube.com/embed/W9cIKFqe278",
+  },
+  {
+    title: "Mathematics",
+    url: "https://www.youtube.com/embed/oE8w5lDRpr0",
+  },
+  {
+    title: "English Language",
+    url: "https://www.youtube.com/embed/29pYOkK9u-w",
+  },
+  {
+    title: "Biochemistry",
+    url: "https://www.youtube.com/embed/tEIo-MJrqgw",
+  },
+  {
+    title: "Anatomy (Lower Limbs)",
+    url: "https://www.youtube.com/embed/V1uWWqoBDXU",
+  },
+  {
+    title: "Blood Physiology",
+    url: "https://www.youtube.com/embed/TiCWv53W4Oc",
+  },
+  {
+    title: "Physics",
+    url: "https://www.youtube.com/embed/wD-sVnFRk6Y",
+  },
+];
 
   return (
     <section className="py-16 px-6 bg-surfaceHover">
