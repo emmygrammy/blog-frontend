@@ -17,7 +17,17 @@ const faqs = [
   {
     question: "Do you provide certificates?",
     answer:
-      "Yes, certificates are awarded after successful completion of selected courses.",
+      "No, we do not provide certificates.",
+  },
+  {
+    question: "What is the duration of each lesson?",
+    answer:
+      "Each lesson typically lasts for 30 minutes, with options for longer or shorter sessions.",
+  },
+  {
+    question: "What is the cost of each lesson?",
+    answer:
+      "learnlift has monthly subscriptions. Check our pricing for more details.",
   },
 ]; // <-- missing here
 

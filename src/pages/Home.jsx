@@ -22,7 +22,6 @@ function Home() {
       <EducationPlan />
       <VideoSlider />
       <FoundersSection />
-      
       <TestimonialSection />
       <FAQSection/>
     </>

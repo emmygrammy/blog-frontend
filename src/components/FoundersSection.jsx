@@ -24,7 +24,7 @@ function FoundersSection() {
 
         {/* heading */}
         <div className="text-center mb-14">
-          <h2 className="text-4xl font-bold text-gray-800">
+          <h2 className="text-2xl font-bold font-heading text-gray-800">
             Meet Our Founders
           </h2>
           <p className="text-gray-600 mt-2">
@@ -33,7 +33,7 @@ function FoundersSection() {
         </div>
 
         {/* cards */}
-        <div className="grid gap-10 md:grid-cols-2">
+        <div className="grid gap-5 md:grid-cols-2 max-w-2xl mx-auto">
           {founders.map((person, index) => (
             <div
               key={index}
@@ -61,7 +61,7 @@ function FoundersSection() {
                   
                   <a
                     href="mailto:example@gmail.com"
-                    className="w-10 h-10 flex items-center justify-center rounded-full bg-gray-100 text-gray-700 hover:bg-blue-500 hover:text-white transition"
+                    className="w-10 h-10 flex items-center justify-center rounded-full bg-gray-100  hover:bg-blue-500 hover:text-white transition text-primary"
                   >
                     <FaEnvelope />
                   </a>
@@ -70,7 +70,7 @@ function FoundersSection() {
                     href="https://wa.me/2340000000000"
                     target="_blank"
                     rel="noreferrer"
-                    className="w-10 h-10 flex items-center justify-center rounded-full bg-gray-100 text-gray-700 hover:bg-green-500 hover:text-white transition"
+                    className="w-10 h-10 flex items-center justify-center rounded-full  text-primary hover:bg-green-500 hover:text-white transition"
                   >
                     <FaWhatsapp />
                   </a>

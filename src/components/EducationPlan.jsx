@@ -28,10 +28,10 @@ const stages = [
 
 function EducationPlan() {
   return (
-    <section className="py-16 px-6 bg-gray-100">
+    <section className="py-10 px-6 bg-gray-100">
 
       {/* Heading */}
-      <div className="text-center mb-10">
+      <div className="text-center mb-5">
         <h2 className="text-2xl font-bold font-heading text-gray-800">
           Our Education Plan
         </h2>
