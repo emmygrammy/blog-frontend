@@ -1,11 +1,14 @@
+import TopSection from '../components/TopSection'
+
 
 
 function About() {
   return (
     <>
-      <h1 className="text-3xl font-bold text-sans text-primary">
-          about page 🚀
-      </h1>
+      <TopSection className="text-center  md:text-left"
+        title="About Learnlift app"
+        subtitle="Learnlift app is a study app that brings success"
+      />
     </>
   )
 }

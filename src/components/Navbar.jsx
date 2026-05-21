@@ -14,7 +14,7 @@ function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <nav className="bg-surface shadow-md sticky top-0 z-50">
+    <nav className=" shadow-md sticky top-0 z-50">
 
       <div className="container mx-auto flex flex-col md:flex-row md:items-center md:justify-between px-4 py-3 gap-3">
 

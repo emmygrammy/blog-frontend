@@ -14,7 +14,10 @@ import TopSection from '../components/TopSection'
 function Home() {
   return (
     <>
-      <TopSection />
+      <TopSection 
+        title="Learnlift app"
+        subtitle="The study app that brings success"
+      />
       <HeroSection />
       <Statistics />
       <ContentSection />

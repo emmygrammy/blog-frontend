@@ -1,10 +1,16 @@
+import TopSection from '../components/TopSection'
+import ContactSection from '../components/Contact'
+
+
 
 function Contact() {
   return (
     <>
-      <h1 className="text-3xl font-bold text-sans text-primary">
-          contact page 🚀
-      </h1>
+      <TopSection className="text-center  md:text-left"
+        title="Contact Us"
+        subtitle="Contact us for any information or support"
+      />
+      <ContactSection />
     </>
   )
 }
