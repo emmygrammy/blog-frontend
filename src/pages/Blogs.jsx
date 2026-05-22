@@ -1,34 +1,25 @@
+import { useEffect, useState } from "react";
 import TopSection from "../components/TopSection";
-import { getAllBlogs } from "../api/Blog";
-import { useState, useEffect } from "react";
+import { getAllBlogs } from "../api/BlogApi";
 
 function Blogs() {
   const [blogs, setBlogs] = useState([]);
   const [loading, setLoading] = useState(true);
 
- useEffect(() => {
-  const fetchBlogs = async () => {
-    console.log("FETCH STARTED");
+  useEffect(() => {
+    const fetchBlogs = async () => {
+      try {
+        const data = await getAllBlogs();
+        setBlogs(data);
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-    try {
-      const data = await getAllBlogs();
-      console.log("API DATA:", data);
-
-      const blogsArray =
-        Array.isArray(data)
-          ? data
-          : data?.blogs || data?.data || [];
-
-      setBlogs(blogsArray);
-    } catch (error) {
-      console.log("ERROR:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  fetchBlogs();
-}, []);
+    fetchBlogs();
+  }, []);
 
   if (loading) {
     return (
@@ -47,18 +38,26 @@ function Blogs() {
       />
 
       <div className="max-w-7xl mx-auto px-4 py-10 grid md:grid-cols-3 gap-6">
-        {blogs.map((blog) => (
-          <div
-            key={blog._id}
-            className="bg-white shadow-md rounded-xl p-4"
-          >
-            <h2 className="font-bold text-xl">{blog.title}</h2>
+        {blogs.length > 0 ? (
+          blogs.map((blog) => (
+            <div
+              key={blog._id}
+              className="bg-white shadow-md rounded-xl p-4 hover:shadow-lg transition"
+            >
+              <h2 className="font-bold text-xl text-gray-800">
+                {blog.title}
+              </h2>
 
-            <p className="text-gray-600 mt-2">
-              {blog.content?.slice(0, 100)}...
-            </p>
-          </div>
-        ))}
+              <p className="text-gray-600 mt-2">
+                {blog.content?.slice(0, 120)}...
+              </p>
+            </div>
+          ))
+        ) : (
+          <p className="text-center col-span-3 text-gray-500">
+            No blogs found
+          </p>
+        )}
       </div>
     </>
   );
