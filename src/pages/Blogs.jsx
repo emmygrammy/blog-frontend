@@ -44,7 +44,7 @@ function Blogs() {
               key={blog._id}
               className="bg-white shadow-md rounded-xl p-4 hover:shadow-lg transition"
             >
-              <h2 className="font-bold text-xl text-gray-800">
+              <h2 className="font-bold text-xl text-secondary tracking-wider">
                 {blog.title}
               </h2>
 
