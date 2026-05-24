@@ -22,10 +22,6 @@ function DashboardLayout() {
          className="w-36 h-36 -mt-16" 
          />
 
-        {/* <h1 
-        className="text-3xl mb-10 font-heading">
-          Admin Panel
-        </h1> */}
 
         <nav className="flex flex-col gap-4">
 
