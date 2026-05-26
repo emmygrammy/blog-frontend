@@ -11,7 +11,7 @@ function DashboardHome() {
             </h1>
         </div>
 
-      <h1 className="text-3xl font-bold text-sans text-primary mt-10">
+      <h1 className="text-3xl font-bold text-sans text-primary mt-10 text-center">
           dashboard home 🚀
       </h1>
       </div>
