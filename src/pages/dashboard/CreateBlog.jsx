@@ -1,11 +1,11 @@
 
 function CreateBlog() {
   return (
-    <>
-      <h1 className="text-3xl font-bold text-sans text-primary">
-          create blog 🚀
+    <div>
+      <h1 className="text-sm font-bold text-sans text-primary">
+          create blog 
       </h1>
-    </>
+    </div>
   )
 }
 export default CreateBlog
