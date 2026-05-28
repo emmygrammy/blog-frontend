@@ -2,7 +2,7 @@ function Topbar() {
   const adminEmail = localStorage.getItem("adminEmail")
 
   return (
-    <div className="bg-white h-16 shadow-xl border-b px-6 flex items-center justify-between rounded-md">
+    <div className="bg-gray-100 h-16 shadow-md border-b px-6 flex items-center justify-between rounded-sm">
 
       <h1 className="text-xl font-semibold text-gray-700">
         Admin Dashboard

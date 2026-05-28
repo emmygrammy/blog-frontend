@@ -3,11 +3,26 @@
 function DashboardHome() {
   return (
     <div>
-        <div>
+        <div className="flex float-start gap-12">
+          
+          <div className="bg-gray-100 p-4 rounded-xl text-center container w-72 h-48">
+              <h1  className="font-heading text-lg text-black" >
+                 30 blogs
+              </h1>
+          </div>
+    
+          <div className="bg-secondary p-4 rounded text-center container w-72 h-48">
+              <h1 className="font-heading text-lg text-white">
+                 40 blogs
+              </h1>
+          </div>
 
-      <h1 className="text-3xl font-bold text-sans text-primary mt-10 text-center">
-          dashboard home 🚀
-      </h1>
+          <div className="bg-primary p-4 rounded text-center container w-72 h-48">
+              <h1  className="font-heading text-lg text-white">
+                 50 blogs
+              </h1>
+          </div>
+
       </div>
     </div>
   )
