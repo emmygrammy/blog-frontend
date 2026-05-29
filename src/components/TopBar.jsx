@@ -4,7 +4,7 @@ function Topbar() {
   return (
     <div className="bg-gray-100 h-16 shadow-md border-b px-6 flex items-center justify-between rounded-sm">
 
-      <h1 className="text-xl font-semibold text-gray-700">
+      <h1 className="text-xl font-semibold font-heading text-gray-700">
         Admin Dashboard
       </h1>
 
