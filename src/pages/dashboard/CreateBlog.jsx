@@ -68,37 +68,6 @@ function CreateNewsBlog() {
           className="mb-4"
         />
 
-        <Button className="bg-primary text-white px-5 py-2 rounded">
-          Submit
-        </Button>
-
-      </form>
-    </div>
-  );
-}
-
-
-
-function CreateCbtBlog() {
-  return (
-    <div>
-      <form className="bg-gray-100 p-6 rounded-xl">
-
-        <h1 className="text-2xl font-bold mb-5">
-          Create CBT Blog
-        </h1>
-
-        <Input
-          type="text"
-          placeholder="CBT title"
-          className="border w-full p-3 rounded mb-4"
-        />
-
-        <textarea
-          placeholder="CBT description"
-          className="border-2 w-full p-3 rounded-2xl mb-4 focus:border-primary focus:outline-none"
-        />
-
         <button className="bg-primary text-white px-5 py-2 rounded">
           Submit
         </button>
@@ -107,3 +76,66 @@ function CreateCbtBlog() {
     </div>
   );
 }
+
+
+
+ function CreateCbtBlog() {
+  return (
+    <div>
+      <form className="bg-gray-100 p-6 rounded-xl">
+        <h1 className="text-2xl font-bold mb-5">
+          Create CBT Question
+        </h1>
+
+        {/* Question */}
+        <textarea
+          placeholder="Enter Question"
+          className="border-2 w-full p-3 rounded-2xl mb-4 focus:border-primary focus:outline-none"
+          rows={4}
+        />
+
+        {/* Options */}
+        <Input
+          type="text"
+          placeholder="Option A"
+          className="border w-full p-3 rounded mb-3"
+        />
+
+        <Input
+          type="text"
+          placeholder="Option B"
+          className="border w-full p-3 rounded mb-3"
+        />
+
+        <Input
+          type="text"
+          placeholder="Option C"
+          className="border w-full p-3 rounded mb-3"
+        />
+
+        <Input
+          type="text"
+          placeholder="Option D"
+          className="border w-full p-3 rounded mb-4"
+        />
+
+        {/* Answer / Solution */}
+        <textarea
+          placeholder="Enter Answer / Solution"
+          className="border-2 w-full p-3 rounded-2xl mb-6 focus:border-primary focus:outline-none"
+          rows={5}
+        />
+
+        <button
+          type="submit"
+          className="bg-primary text-white px-5 py-2 rounded"
+        >
+          Submit
+        </button>
+      </form>
+    </div>
+  );
+}
+
+
+
