@@ -1,30 +1,47 @@
 import api from './axios'
 
+// =====================
+// BLOG CRUD
+// =====================
 
-
-//get all blogs
+// Get all blogs
 export const getAllBlogs = async () => {
-    const response = await api.get('/blog')
-    return response.data.posts || []
+  const response = await api.get('/blog')
+  return response.data.posts || []
 }
 
-//get blog by id
+// Get blog by ID
 export const getBlogById = async (id) => {
-    const response = await api.get(`/blog/${id}`)
-    return response.data.post || {}
+  const response = await api.get(`/blog/${id}`)
+  return response.data.post || {}
 }
 
-
-// Create news blog
-export const createNewsBlog = async (data) => {
+// Create blog
+export const createBlog = async (data) => {
   const response = await api.post('/blog', data)
+  return response.data.data
+}
+
+// Update blog
+export const updateBlog = async (id, data) => {
+  const response = await api.put(`/blog/${id}`, data)
   return response.data
 }
 
-// Upload image for a news blog
-export const uploadNewsImage = async (blogId, formData) => {
+// Delete blog
+export const deleteBlog = async (id) => {
+  const response = await api.delete(`/blog/${id}`)
+  return response.data
+}
+
+// =====================
+// IMAGE OPERATIONS
+// =====================
+
+// Upload image
+export const uploadBlogImage = async (id, formData) => {
   const response = await api.post(
-    `/blog/${blogId}/upload`,
+    `/blog/${id}/upload`,
     formData,
     {
       headers: {
@@ -33,5 +50,26 @@ export const uploadNewsImage = async (blogId, formData) => {
     }
   )
 
+  return response.data
+}
+
+// Replace/Edit image
+export const updateBlogImage = async (id, formData) => {
+  const response = await api.put(
+    `/blog/${id}/image`,
+    formData,
+    {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    }
+  )
+
+  return response.data
+}
+
+// Delete image
+export const deleteBlogImage = async (id) => {
+  const response = await api.delete(`/blog/${id}/image`)
   return response.data
 }
