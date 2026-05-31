@@ -1,15 +1,24 @@
 import { useEffect, useState } from "react";
 import { getAllBlogs, deleteBlog } from "../../api/BlogApi";
+import { getAllQuestions, deleteQuestion } from "../../api/cbtApi";
+import Loader from "../../components/Loader";
 
-function ManageBlogs() {
+function ManageContent() {
+  const [activeTab, setActiveTab] = useState("news");
+
   const [blogs, setBlogs] = useState([]);
+  const [questions, setQuestions] = useState([]);
+
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchBlogs = async () => {
+    const fetchData = async () => {
       try {
-        const data = await getAllBlogs();
-        setBlogs(data);
+        const blogsData = await getAllBlogs();
+        const questionsData = await getAllQuestions();
+
+        setBlogs(blogsData);
+        setQuestions(questionsData.questions);
       } catch (error) {
         console.log(error);
       } finally {
@@ -17,128 +26,171 @@ function ManageBlogs() {
       }
     };
 
-    fetchBlogs();
+    fetchData();
   }, []);
 
-  const handleDelete = async (id) => {
-    const confirmDelete = window.confirm(
-      "Are you sure you want to delete this blog?"
-    );
-
-    if (!confirmDelete) return;
-
-    try {
-      await deleteBlog(id);
-
-      setBlogs((prev) =>
-        prev.filter((blog) => blog._id !== id)
-      );
-
-      alert("Blog deleted successfully");
-    } catch (error) {
-      console.log(error);
-      alert("Failed to delete blog");
-    }
+  // DELETE BLOG
+  const handleDeleteBlog = async (id) => {
+    await deleteBlog(id);
+    setBlogs((prev) => prev.filter((b) => b._id !== id));
   };
 
-  if (loading) {
-    return (
-      <div className="p-6">
-        <h2 className="text-lg font-semibold">
-          Loading blogs...
-        </h2>
-      </div>
-    );
-  }
+  // DELETE QUESTION
+  const handleDeleteQuestion = async (id) => {
+    await deleteQuestion(id);
+    setQuestions((prev) => prev.filter((q) => q._id !== id));
+  };
+
+  if (loading) return  <Loader text="Loading dashboard..." />;
 
   return (
     <div className="p-6">
-      <h1 className="text-3xl font-bold text-primary mb-6">
-        Manage Blogs
+
+      <h1 className="text-2xl font-bold mb-6">
+        Manage Content
       </h1>
 
-      <div className="bg-white rounded-xl shadow overflow-hidden">
-        <table className="w-full">
-          <thead className="bg-gray-100">
-            <tr>
-              <th className="text-left p-4">Image</th>
-              <th className="text-left p-4">Title</th>
-              <th className="text-left p-4">Content</th>
-              <th className="text-left p-4">Created</th>
-              <th className="text-left p-4">Actions</th>
-            </tr>
-          </thead>
+      {/* TOGGLE */}
+      <div className="flex gap-3 mb-6">
+        <button
+          onClick={() => setActiveTab("news")}
+          className={`px-4 py-2 rounded ${
+            activeTab === "news"
+              ? "bg-primary text-white"
+              : "bg-gray-200"
+          }`}
+        >
+          News Blogs
+        </button>
 
-          <tbody>
-            {blogs.length === 0 ? (
+        <button
+          onClick={() => setActiveTab("cbt")}
+          className={`px-4 py-2 rounded ${
+            activeTab === "cbt"
+              ? "bg-primary text-white"
+              : "bg-gray-200"
+          }`}
+        >
+          CBT Questions
+        </button>
+      </div>
+
+      {/* ================= NEWS TABLE ================= */}
+      {activeTab === "news" && (
+        <div className="bg-white shadow rounded overflow-x-auto">
+          <table className="w-full">
+
+            <thead className="bg-gray-100">
               <tr>
-                <td
-                  colSpan="5"
-                  className="text-center p-6"
-                >
-                  No blogs found
-                </td>
+                <th className="p-3 text-left">Image</th>
+                <th className="p-3 text-left">Title</th>
+                <th className="p-3 text-left">Content</th>
+                <th className="p-3 text-left">Date</th>
+                <th className="p-3 text-left">Actions</th>
               </tr>
-            ) : (
-              blogs.map((blog) => (
-                <tr
-                  key={blog._id}
-                  className="border-t"
-                >
-                  <td className="p-4">
-                    {blog.image ? (
-                      <img
-                        src={blog.image}
-                        alt={blog.title}
-                        className="w-16 h-16 object-cover rounded"
-                      />
-                    ) : (
-                      <div className="w-16 h-16 bg-gray-200 rounded flex items-center justify-center text-xs">
-                        No Image
-                      </div>
-                    )}
+            </thead>
+
+            <tbody>
+              {blogs.map((blog) => (
+                <tr key={blog._id} className="border-t">
+
+                  {/* IMAGE */}
+                  <td className="p-3">
+                    <img
+                      src={blog.image}
+                      alt="blog"
+                      className="w-14 h-14 object-cover rounded"
+                    />
                   </td>
 
-                  <td className="p-4 font-medium">
+                  {/* TITLE */}
+                  <td className="p-3 font-medium">
                     {blog.title}
                   </td>
 
-                  <td className="p-4 max-w-sm truncate">
+                  {/* CONTENT */}
+                  <td className="p-3 text-sm text-gray-600 max-w-xs truncate">
                     {blog.content}
                   </td>
 
-                  <td className="p-4">
-                    {new Date(
-                      blog.createdAt
-                    ).toLocaleDateString()}
+                  {/* DATE */}
+                  <td className="p-3 text-sm">
+                    {new Date(blog.createdAt).toLocaleDateString()}
                   </td>
 
-                  <td className="p-4">
-                    <div className="flex gap-2">
-                      <button
-                        className="bg-blue-600 text-white px-3 py-1 rounded"
-                      >
-                        Edit
-                      </button>
+                  {/* ACTIONS */}
+                  <td className="p-3 flex gap-2">
+                    <button className="bg-blue-500 text-white px-3 py-1 rounded">
+                      Edit
+                    </button>
 
-                      <button
-                        onClick={() =>
-                          handleDelete(blog._id)
-                        }
-                        className="bg-red-600 text-white px-3 py-1 rounded"
-                      >
-                        Delete
-                      </button>
-                    </div>
+                    <button
+                      onClick={() => handleDeleteBlog(blog._id)}
+                      className="bg-red-500 text-white px-3 py-1 rounded"
+                    >
+                      Delete
+                    </button>
                   </td>
+
                 </tr>
-              ))
-            )}
-          </tbody>
-        </table>
-      </div>
+              ))}
+            </tbody>
+
+          </table>
+        </div>
+      )}
+
+      {/* ================= CBT TABLE ================= */}
+      {activeTab === "cbt" && (
+        <div className="bg-white shadow rounded overflow-x-auto">
+          <table className="w-full">
+
+            <thead className="bg-gray-100">
+              <tr>
+                <th className="p-3 text-left">Question</th>
+                <th className="p-3 text-left">Answer</th>
+                <th className="p-3 text-left">Actions</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              {questions.map((q) => (
+                <tr key={q._id} className="border-t">
+
+                  {/* QUESTION */}
+                  <td className="p-3 font-medium">
+                    {q.question}
+                  </td>
+
+                  {/* ANSWER */}
+                  <td className="p-3 text-sm text-gray-600">
+                    {q.correctAnswer}
+                  </td>
+
+                  {/* ACTIONS */}
+                  <td className="p-3 flex gap-2">
+                    <button className="bg-blue-500 text-white px-3 py-1 rounded">
+                      Edit
+                    </button>
+
+                    <button
+                      onClick={() => handleDeleteQuestion(q._id)}
+                      className="bg-red-500 text-white px-3 py-1 rounded"
+                    >
+                      Delete
+                    </button>
+                  </td>
+
+                </tr>
+              ))}
+            </tbody>
+
+          </table>
+        </div>
+      )}
+
     </div>
   );
 }
 
-export default ManageBlogs;
+export default ManageContent;

@@ -3,7 +3,10 @@ import api from './axios'
 // Get all CBT questions
 export const getAllQuestions = async () => {
   const response = await api.get('/questions')
-  return response.data.questions || []
+   return {
+    questions: response.data.data || [],
+    total: response.data.total || 0,
+  };
 }
 
 // Get CBT question by ID
