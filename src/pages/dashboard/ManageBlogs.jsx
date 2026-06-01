@@ -147,19 +147,40 @@ function ManageContent() {
 
             <thead className="bg-gray-100">
               <tr>
+                <th className="p-3 text-left">#</th>
                 <th className="p-3 text-left">Question</th>
+                <th className="p-3 text-left">Options</th>
+                <th className="p-3 text-left">Explanation</th>
                 <th className="p-3 text-left">Answer</th>
                 <th className="p-3 text-left">Actions</th>
               </tr>
             </thead>
 
             <tbody>
-              {questions.map((q) => (
+              {questions.map((q, index) => (
                 <tr key={q._id} className="border-t">
+                  {/* INDEX */}
+                  <td className="p-3 text-center">{index + 1}</td>
 
                   {/* QUESTION */}
                   <td className="p-3 font-medium">
                     {q.question}
+                  </td>
+
+                  {/* OPTIONS */}
+                  <td className="p-3">
+                    A. {q.options.A}
+                    <br />
+                    B. {q.options.B}
+                    <br />
+                    C. {q.options.C}
+                    <br />
+                    D. {q.options.D}
+                  </td>
+
+                  {/* EXPLANATION */}
+                  <td className="p-3 text-sm text-gray-600">
+                    {q.explanation}
                   </td>
 
                   {/* ANSWER */}
