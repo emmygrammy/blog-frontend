@@ -31,15 +31,38 @@ function ManageContent() {
 
   // DELETE BLOG
   const handleDeleteBlog = async (id) => {
+  try {
     await deleteBlog(id);
-    setBlogs((prev) => prev.filter((b) => b._id !== id));
-  };
+
+    setBlogs((prev) =>
+      prev.filter(
+        (blog) => blog._id !== id
+      )
+    );
+
+    alert("Blog deleted");
+  } catch (error) {
+    console.log(error);
+  }
+};
 
   // DELETE QUESTION
   const handleDeleteQuestion = async (id) => {
+  try {
     await deleteQuestion(id);
-    setQuestions((prev) => prev.filter((q) => q._id !== id));
-  };
+
+    setQuestions((prev) =>
+      prev.filter(
+        (question) =>
+          question._id !== id
+      )
+    );
+
+    alert("Question deleted");
+  } catch (error) {
+    console.log(error);
+  }
+};
 
   if (loading) return  <Loader text="Loading dashboard..." />;
 
@@ -147,12 +170,12 @@ function ManageContent() {
 
             <thead className="bg-gray-100">
               <tr>
-                <th className="p-3 text-left">#</th>
-                <th className="p-3 text-left">Question</th>
-                <th className="p-3 text-left">Options</th>
-                <th className="p-3 text-left">Explanation</th>
-                <th className="p-3 text-left">Answer</th>
-                <th className="p-3 text-left">Actions</th>
+                <th className="p-3 text-left font-heading w-12">No</th>
+                <th className="p-3 text-left font-heading w-48 ">Question</th>
+                <th className="p-3 text-left font-heading w-48">Options</th>
+                <th className="p-3 text-left font-heading w-48">Explanation</th>
+                <th className="p-3 text-left font-heading w-12">Answer</th>
+                <th className="p-3 text-left font-heading w-20">Actions</th>
               </tr>
             </thead>
 
@@ -160,15 +183,15 @@ function ManageContent() {
               {questions.map((q, index) => (
                 <tr key={q._id} className="border-t">
                   {/* INDEX */}
-                  <td className="p-3 text-center">{index + 1}</td>
+                  <td className="p-3 text-center font-heading">{index + 1}</td>
 
                   {/* QUESTION */}
-                  <td className="p-3 font-medium">
+                  <td className="p-3 font-medium font-heading">
                     {q.question}
                   </td>
 
                   {/* OPTIONS */}
-                  <td className="p-3">
+                  <td className="p-3 font-heading">
                     A. {q.options.A}
                     <br />
                     B. {q.options.B}
@@ -179,17 +202,17 @@ function ManageContent() {
                   </td>
 
                   {/* EXPLANATION */}
-                  <td className="p-3 text-sm text-gray-600">
+                  <td className="p-3 text-sm font-heading">
                     {q.explanation}
                   </td>
 
                   {/* ANSWER */}
-                  <td className="p-3 text-sm text-gray-600">
+                  <td className="p-3 text-sm font-heading">
                     {q.correctAnswer}
                   </td>
 
                   {/* ACTIONS */}
-                  <td className="p-3 flex gap-2">
+                  <td className="p-3 flex gap-2 font-heading">
                     <button className="bg-blue-500 text-white px-3 py-1 rounded">
                       Edit
                     </button>
