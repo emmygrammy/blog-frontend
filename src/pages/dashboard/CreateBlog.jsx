@@ -1,29 +1,30 @@
 import { useState } from "react";
-import Button from "../../components/Button";
 import Input from "../../components/Input";
 
 import { createBlog, uploadBlogImage } from "../../api/BlogApi";
 import { createQuestion } from "../../api/cbtApi";
 
 export default function CreateBlog() {
-  const [activeForm, setActiveForm] = useState("");
+  const [activeForm, setActiveForm] = useState("news");
 
   return (
     <div>
       <div className="flex  flex-start items-center gap-3">
-        <Button
+        <button
           onClick={() => setActiveForm("news")}
-          className="bg-blue-950 text-white px-3 py-2 rounded-sm max-w-sm hover:bg-primary"
+          className={`px-3 py-2 rounded-sm max-w-sm
+            ${activeForm === "news" ? "bg-primary text-white" : "bg-gray-200 text-black"}`}
         >
           Create News Blog
-        </Button>
+        </button>
 
-        <Button
+        <button
           onClick={() => setActiveForm("cbt")}
-          className="bg-secondary text-white px-3 py-2 rounded-sm max-w-sm  hover:bg-primary"
+          className={`px-3 py-2 rounded-sm max-w-sm
+            ${activeForm === "cbt" ? "bg-primary text-white" : "bg-gray-200 text-black"}`}
         >
           Create CBT Question
-        </Button>
+        </button>
       </div>
 
       <div className="mt-10">
