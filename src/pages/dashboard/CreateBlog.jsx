@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import Input from "../../components/Input";
 
-import { createBlog, uploadBlogImage } from "../../api/BlogApi";
+
+import { createBlog, uploadBlogImage, getAllBlogs  } from "../../api/BlogApi";
 import { createQuestion } from "../../api/cbtApi";
 
 export default function CreateBlog() {
@@ -28,7 +29,12 @@ export default function CreateBlog() {
       </div>
 
       <div className="mt-10">
-        {activeForm === "news" && <CreateNewsBlog />}
+        {activeForm === "news" && 
+        <>
+        <CreateNewsBlog />
+        <BlogList />
+        </>
+         }
         {activeForm === "cbt" && <CreateCbtBlog />}
       </div>
     </div>
@@ -38,6 +44,68 @@ export default function CreateBlog() {
 /* =========================
    NEWS BLOG FORM
 ========================= */
+// function CreateNewsBlog() {
+//   const [title, setTitle] = useState("");
+//   const [content, setContent] = useState("");
+//   const [image, setImage] = useState(null);
+
+//   const handleSubmit = async (e) => {
+//     e.preventDefault();
+
+//     try {
+//       const blog = await createBlog({
+//         title,
+//         content,
+//       });
+
+//       if (image) {
+//         const formData = new FormData();
+//         formData.append("image", image);
+
+//         await uploadBlogImage(blog._id, formData);
+//       }
+
+//       alert("Blog created successfully");
+
+//       setTitle("");
+//       setContent("");
+//       setImage(null);
+//     } catch (error) {
+//       console.log(error.response?.data);
+//       alert("Failed to create blog");
+//     }
+//   };
+
+//   return (
+//     <form onSubmit={handleSubmit} className="bg-gray-100 p-6 rounded-xl">
+//       <h1 className="text-2xl font-bold mb-5">Create News Blog</h1>
+
+//       <Input
+//         placeholder="News title"
+//         value={title}
+//         onChange={(e) => setTitle(e.target.value)}
+//         className="border w-full p-3 mb-4"
+//       />
+
+//       <textarea
+//         placeholder="News content"
+//         value={content}
+//         onChange={(e) => setContent(e.target.value)}
+//         className="border-2 w-full p-3 rounded mb-4"
+//       />
+
+//       <Input
+//         type="file"
+//         onChange={(e) => setImage(e.target.files[0])}
+//         className="mb-4"
+//       />
+
+//       <button className="bg-primary text-white px-5 py-2 rounded">
+//         Submit
+//       </button>
+//     </form>
+//   );
+// }
 function CreateNewsBlog() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
@@ -47,25 +115,45 @@ function CreateNewsBlog() {
     e.preventDefault();
 
     try {
-      const blog = await createBlog({
+      // 1. Create blog first
+      const createdBlog = await createBlog({
         title,
         content,
       });
 
+      console.log("CREATED BLOG:", createdBlog);
+
+      // 2. SAFETY CHECK (VERY IMPORTANT)
+      if (!createdBlog?._id) {
+        alert("Blog creation failed - no ID returned");
+        return;
+      }
+
+      // 3. Upload image ONLY if selected
       if (image) {
         const formData = new FormData();
         formData.append("image", image);
 
-        await uploadBlogImage(blog._id, formData);
+        const uploadResponse = await uploadBlogImage(
+          createdBlog._id,
+          formData
+        );
+
+        console.log("UPLOAD RESPONSE:", uploadResponse);
       }
 
       alert("Blog created successfully");
 
+      // 4. Reset form
       setTitle("");
       setContent("");
       setImage(null);
+
+      // OPTIONAL: refresh UI if needed
+      // window.location.reload();
+
     } catch (error) {
-      console.log(error.response?.data);
+      console.log(error.response?.data || error);
       alert("Failed to create blog");
     }
   };
@@ -98,6 +186,36 @@ function CreateNewsBlog() {
         Submit
       </button>
     </form>
+  );
+}
+
+
+
+function BlogList() {
+  const [blogs, setBlogs] = useState([]);
+
+  useEffect(() => {
+    const fetchBlogs = async () => {
+      const data = await getAllBlogs();
+      setBlogs(data);
+    };
+
+    fetchBlogs();
+  }, []);
+
+  return (
+    <div>
+      {blogs.map((blog) => (
+        <div key={blog._id}>
+          <img
+            src={blog.image?.url}
+            alt={blog.title}
+            className="w-full h-60 object-cover"
+          />
+          <h2>{blog.title}</h2>
+        </div>
+      ))}
+    </div>
   );
 }
 
