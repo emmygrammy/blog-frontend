@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import TopSection from "../components/TopSection";
 import { getAllBlogs } from "../api/BlogApi";
+import Loader from "../components/Loader";
 
 function Blogs() {
   const [blogs, setBlogs] = useState([]);
@@ -23,9 +24,7 @@ function Blogs() {
 
   if (loading) {
     return (
-      <div className="text-center text-2xl font-bold text-primary py-10">
-        Loading...
-      </div>
+      <Loader text="Loading blogs..." />
     );
   }
 

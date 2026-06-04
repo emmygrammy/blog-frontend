@@ -7,6 +7,7 @@ import api from './axios'
 // Get all blogs
 export const getAllBlogs = async () => {
   const response = await api.get('/blog')
+  // return response.data
   return response.data.posts || []
 }
 

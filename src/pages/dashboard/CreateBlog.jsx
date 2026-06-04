@@ -191,13 +191,17 @@ function CreateNewsBlog() {
 
 
 
+
 function BlogList() {
   const [blogs, setBlogs] = useState([]);
 
   useEffect(() => {
     const fetchBlogs = async () => {
-      const data = await getAllBlogs();
-      setBlogs(data);
+      const res = await getAllBlogs();
+
+      console.log("BLOG RESPONSE:", res);
+
+      setBlogs(res.posts || []); // ✅ FIX
     };
 
     fetchBlogs();
@@ -207,17 +211,26 @@ function BlogList() {
     <div>
       {blogs.map((blog) => (
         <div key={blog._id}>
-          <img
-            src={blog.image?.url}
-            alt={blog.title}
-            className="w-full h-60 object-cover"
-          />
+          {blog.image?.url ? (
+            <img
+              src={blog.image.url}
+              alt={blog.title}
+              className="w-full h-60 object-cover"
+            />
+          ) : (
+            <div className="w-full h-60 bg-gray-300 flex items-center justify-center">
+              No Image
+            </div>
+          )}
+
           <h2>{blog.title}</h2>
         </div>
       ))}
     </div>
   );
 }
+
+
 
 /* =========================
    CBT QUESTION FORM
