@@ -1,38 +1,52 @@
-import { useEffect, useState } from "react";
-import { getAllBlogs } from "../../api/BlogApi";
-import { getAllQuestions } from "../../api/cbtApi";
+// import { useEffect, useState } from "react";
+// import { getAllBlogs } from "../../api/BlogApi";
+// import { getAllQuestions } from "../../api/cbtApi";
 import Loader from "../../components/Loader";
+import { useBlogs } from "../../hooks/UseBlog";
+import { useQuestions } from "../../hooks/UseQuestions";
 
 
 function DashboardHome() {
-  const [blogs, setBlogs] = useState([]);
-  const [questions, setQuestions] = useState([]);
-  const [cbtCount, setCbtCount] = useState(0);
-  const [loading, setLoading] = useState(true);
+  // const [blogs, setBlogs] = useState([]);
+  // const [questions, setQuestions] = useState([]);
+  // const [cbtCount, setCbtCount] = useState(0);
+  // const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const fetchDashboardData = async () => {
-      try {
-        const blogsData = await getAllBlogs();
-        const questionsResponse = await getAllQuestions();
+  // useEffect(() => {
+  //   const fetchDashboardData = async () => {
+  //     try {
+  //       const blogsData = await getAllBlogs();
+  //       const questionsResponse = await getAllQuestions();
 
-        setBlogs(blogsData);
+  //       setBlogs(blogsData);
 
-        // ✅ FIX HERE
-        setQuestions(questionsResponse.questions);
-        setCbtCount(questionsResponse.total);
+  //       // ✅ FIX HERE
+  //       setQuestions(questionsResponse.questions);
+  //       setCbtCount(questionsResponse.total);
 
-      } catch (error) {
-        console.log(error);
-      } finally {
-        setLoading(false);
-      }
-    };
+  //     } catch (error) {
+  //       console.log(error);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
 
-    fetchDashboardData();
-  }, []);
+  //   fetchDashboardData();
+  // }, []);
 
-  if (loading) {
+  const { 
+    data: blogs = [], 
+    isLoading: blogsLoading,
+    error: blogsError,
+  } = useBlogs();
+  
+  const { 
+    data: questions = [], 
+    isLoading: questionsLoading,
+    error: questionsError,
+  } = useQuestions();
+
+  if (blogsLoading || questionsLoading) {
     return (
         <Loader text="Loading dashboard..." />
     );
