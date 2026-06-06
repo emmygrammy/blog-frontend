@@ -1,73 +1,93 @@
-import { useEffect, useState } from "react";
-import { getAllBlogs, deleteBlog } from "../../api/BlogApi";
-import { getAllQuestions, deleteQuestion } from "../../api/cbtApi";
+import {useState } from "react";
 import DeleteModal from "../../components/DeleteModal";
 import Loader from "../../components/Loader";
+import { useBlogs, useDeleteBlog } from "../../hooks/UseBlog";
+import { useQuestions, useDeleteQuestion } from "../../hooks/UseQuestions";
+
 
 function ManageContent() {
   const [activeTab, setActiveTab] = useState("news");
 
-  const [blogs, setBlogs] = useState([]);
-  const [questions, setQuestions] = useState([]);
+  // const [blogs, setBlogs] = useState([]);
+  // const [questions, setQuestions] = useState([]);
 
-  const [loading, setLoading] = useState(true);
+  const {
+  data: blogs = [],
+  isLoading: blogsLoading,
+  error: blogsError,
+} = useBlogs();
+
+const {
+  data: questionsData,
+  isLoading: questionsLoading,
+  error: questionsError,
+} = useQuestions();
+
+const questions = questionsData?.questions || [];
+
+  const deleteBlogMutation = useDeleteBlog();
+  const deleteQuestionMutation = useDeleteQuestion();
 
   // MODAL STATE
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [selectedId, setSelectedId] = useState(null);
   const [deleteType, setDeleteType] = useState(null); // "blog" | "question"
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const blogsData = await getAllBlogs();
-        const questionsData = await getAllQuestions();
-
-        setBlogs(blogsData);
-        setQuestions(questionsData.questions || []);
-      } catch (error) {
-        console.log(error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchData();
-  }, []);
-
+  
   // ================= DELETE LOGIC (NO UI HERE) =================
-  const deleteBlogById = async (id) => {
-    await deleteBlog(id);
-    setBlogs((prev) => prev.filter((b) => b._id !== id));
-  };
+  
 
-  const deleteQuestionById = async (id) => {
-    await deleteQuestion(id);
-    setQuestions((prev) => prev.filter((q) => q._id !== id));
-  };
 
-  // ================= CONFIRM DELETE =================
-  const handleConfirmDelete = async () => {
-    if (!selectedId) return;
 
-    try {
-      if (deleteType === "blog") {
-        await deleteBlogById(selectedId);
-      }
+// const handleConfirmDelete = async () => {
+//   console.log("Delete clicked");
+//   console.log("Delete Type:", deleteType);
+//   console.log("Selected ID:", selectedId);
 
-      if (deleteType === "question") {
-        await deleteQuestionById(selectedId);
-      }
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setShowDeleteModal(false);
-      setSelectedId(null);
-      setDeleteType(null);
+//   try {
+//     if (deleteType === "question") {
+//       await deleteQuestionMutation.mutateAsync(selectedId);
+//       console.log("Question mutation completed");
+//     }
+
+//     if (deleteType === "blog") {
+//       await deleteBlogMutation.mutateAsync(selectedId);
+//       console.log("Blog mutation completed");
+//     }
+//   } catch (error) {
+//     console.log("Delete error:", error);
+//   }
+// };
+const handleConfirmDelete = async () => {
+  try {
+    if (deleteType === "question") {
+      await deleteQuestionMutation.mutateAsync(selectedId);
     }
-  };
 
-  if (loading) return <Loader text="Loading dashboard..." />;
+    if (deleteType === "blog") {
+      await deleteBlogMutation.mutateAsync(selectedId);
+    }
+
+    setShowDeleteModal(false);
+    setSelectedId(null);
+    setDeleteType(null);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+  
+  if (blogsLoading || questionsLoading) {
+  return <Loader text="Loading dashboard..." />;
+}
+
+if (blogsError || questionsError) {
+  return (
+    <div>
+      Failed to load content
+    </div>
+  );
+}
 
   return (
     <div className="p-6">
@@ -120,7 +140,7 @@ function ManageContent() {
 
                   <td className="p-3 font-heading">
                     <img
-                      src={blog.image}
+                      src={blog.image?.url ? blog.image.url : ""}
                       alt="blog"
                       className="w-14 h-14 object-cover rounded"
                     />

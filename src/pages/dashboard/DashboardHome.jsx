@@ -1,56 +1,32 @@
-// import { useEffect, useState } from "react";
-// import { getAllBlogs } from "../../api/BlogApi";
-// import { getAllQuestions } from "../../api/cbtApi";
+
 import Loader from "../../components/Loader";
 import { useBlogs } from "../../hooks/UseBlog";
 import { useQuestions } from "../../hooks/UseQuestions";
 
 
 function DashboardHome() {
-  // const [blogs, setBlogs] = useState([]);
-  // const [questions, setQuestions] = useState([]);
-  // const [cbtCount, setCbtCount] = useState(0);
-  // const [loading, setLoading] = useState(true);
-
-  // useEffect(() => {
-  //   const fetchDashboardData = async () => {
-  //     try {
-  //       const blogsData = await getAllBlogs();
-  //       const questionsResponse = await getAllQuestions();
-
-  //       setBlogs(blogsData);
-
-  //       // ✅ FIX HERE
-  //       setQuestions(questionsResponse.questions);
-  //       setCbtCount(questionsResponse.total);
-
-  //     } catch (error) {
-  //       console.log(error);
-  //     } finally {
-  //       setLoading(false);
-  //     }
-  //   };
-
-  //   fetchDashboardData();
-  // }, []);
-
-  const { 
-    data: blogs = [], 
-    isLoading: blogsLoading,
-    error: blogsError,
-  } = useBlogs();
   
-  const { 
-    data: questions = [], 
-    isLoading: questionsLoading,
-    error: questionsError,
-  } = useQuestions();
+  const {
+  data: blogs = [],
+  isLoading: blogsLoading,
+  error: blogsError,
+} = useBlogs();
 
-  if (blogsLoading || questionsLoading) {
-    return (
-        <Loader text="Loading dashboard..." />
-    );
-  }
+const {
+  data: questionsData,
+  isLoading: questionsLoading,
+  error: questionsError,
+} = useQuestions();
+
+const cbtCount = questionsData?.total || 0;
+
+if (blogsLoading || questionsLoading) {
+  return <Loader text="Loading dashboard..." />;
+}
+
+if (blogsError || questionsError) {
+  return <div>Failed to load dashboard data</div>;
+}
 
   return (
     <div className="p-6">

@@ -1,5 +1,5 @@
-import { useQuery } from "@tanstack/react-query"
-import { getAllBlogs } from "../api/BlogApi"
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query"
+import { getAllBlogs, deleteBlog } from "../api/BlogApi"
 
 
 export const useBlogs =()=> {
@@ -8,3 +8,17 @@ export const useBlogs =()=> {
         queryFn:()=>getAllBlogs(),
     })
 }
+
+export const useDeleteBlog = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: deleteBlog,
+
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["blogs"],
+      });
+    },
+  });
+};
