@@ -12,7 +12,7 @@ export const getAllQuestions = async () => {
 // Get CBT question by ID
 export const getQuestionById = async (id) => {
   const response = await api.get(`/questions/${id}`)
-  return response.data.question || {}
+  return response.data.data || {}
 }
 
 // Create CBT question

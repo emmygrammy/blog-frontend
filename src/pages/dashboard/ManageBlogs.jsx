@@ -3,30 +3,34 @@ import DeleteModal from "../../components/DeleteModal";
 import Loader from "../../components/Loader";
 import { useBlogs, useDeleteBlog } from "../../hooks/UseBlog";
 import { useQuestions, useDeleteQuestion } from "../../hooks/UseQuestions";
+import { Link } from "react-router-dom";
+
 
 
 function ManageContent() {
   const [activeTab, setActiveTab] = useState("news");
 
-  // const [blogs, setBlogs] = useState([]);
-  // const [questions, setQuestions] = useState([]);
-
+// Get all blogs
   const {
   data: blogs = [],
   isLoading: blogsLoading,
   error: blogsError,
 } = useBlogs();
 
+// Get all questions
 const {
   data: questionsData,
   isLoading: questionsLoading,
   error: questionsError,
 } = useQuestions();
 
+
+
 const questions = questionsData?.questions || [];
 
   const deleteBlogMutation = useDeleteBlog();
   const deleteQuestionMutation = useDeleteQuestion();
+  
 
   // MODAL STATE
   const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -35,29 +39,7 @@ const questions = questionsData?.questions || [];
 
   
   // ================= DELETE LOGIC (NO UI HERE) =================
-  
-
-
-
-// const handleConfirmDelete = async () => {
-//   console.log("Delete clicked");
-//   console.log("Delete Type:", deleteType);
-//   console.log("Selected ID:", selectedId);
-
-//   try {
-//     if (deleteType === "question") {
-//       await deleteQuestionMutation.mutateAsync(selectedId);
-//       console.log("Question mutation completed");
-//     }
-
-//     if (deleteType === "blog") {
-//       await deleteBlogMutation.mutateAsync(selectedId);
-//       console.log("Blog mutation completed");
-//     }
-//   } catch (error) {
-//     console.log("Delete error:", error);
-//   }
-// };
+  // Delete blog or question
 const handleConfirmDelete = async () => {
   try {
     if (deleteType === "question") {
@@ -75,6 +57,8 @@ const handleConfirmDelete = async () => {
     console.log(error);
   }
 };
+
+
 
   
   if (blogsLoading || questionsLoading) {
@@ -162,7 +146,9 @@ if (blogsError || questionsError) {
                     <div className="flex gap-2">
 
                       <button className="bg-blue-500 text-white px-3 py-1 rounded font-heading">
-                        Edit
+                        <Link to={`/dashboard/edit/${blog._id}`}>
+                          Edit
+                        </Link>
                       </button>
 
                       <button
@@ -229,7 +215,9 @@ if (blogsError || questionsError) {
                     <div className="flex gap-2">
 
                       <button className="bg-blue-500 text-white px-3 py-1 rounded font-heading">
-                        Edit
+                        <Link to={`/dashboard/edit-question/${q._id}`}>
+                          Edit
+                        </Link>
                       </button>
 
                       <button

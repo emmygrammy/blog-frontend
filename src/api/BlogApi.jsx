@@ -24,10 +24,16 @@ export const createBlog = async (data) => {
 }
 
 // Update blog
-export const updateBlog = async (id, data) => {
-  const response = await api.put(`/blog/${id}`, data)
-  return response.data
-}
+export const updateBlog = async ({ id, data }) => {
+  const response = await api.put(
+    `/blog/${id}`,
+    data
+  );
+
+  return response.data;
+};
+
+
 
 // Delete blog
 export const deleteBlog = async (id) => {
@@ -57,7 +63,7 @@ export const uploadBlogImage = async (id, formData) => {
 // Replace/Edit image
 export const updateBlogImage = async (id, formData) => {
   const response = await api.put(
-    `/blog/${id}/image`,
+    `/blog/${id}/update`,
     formData,
     {
       headers: {
