@@ -33,7 +33,6 @@ export const useDeleteQuestion = () => {
         queryKey: ["questions"],
       });
 
-      toast.success("Question deleted");
     },
 
     onError: () => {
