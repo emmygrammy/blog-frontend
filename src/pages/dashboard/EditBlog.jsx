@@ -1,119 +1,3 @@
-// import { useState } from "react";
-// import { useParams, useNavigate } from "react-router-dom";
-// import { useBlog, useUpdateBlog } from "../../hooks/UseBlog";
-
-// function EditBlog() {
-//   const { id } = useParams();
-//   const navigate = useNavigate();
-
-//   const { data: blog, isLoading, error } = useBlog(id);
-//   const updateBlogMutation = useUpdateBlog();
-
-//   // ✅ Initialize only once when blog exists
-//   const [formData, setFormData] = useState(() => ({
-//     title: "",
-//     content: "",
-//   }));
-
-//   // 🔥 hydrate directly during render (safe pattern)
-//   if (blog && formData.title === "") {
-//     setFormData({
-//       title: blog.title || "",
-//       content: blog.content || "",
-//     });
-//   }
-
-//   const handleChange = (e) => {
-//     const { name, value } = e.target;
-
-//     setFormData((prev) => ({
-//       ...prev,
-//       [name]: value,
-//     }));
-//   };
-
-//   const handleSubmit = async (e) => {
-//     e.preventDefault();
-
-//     try {
-//       await updateBlogMutation.mutateAsync({
-//         id,
-//         data: formData,
-//       });
-
-//       navigate("/dashboard/manage");
-//     } catch (error) {
-//       alert(error?.response?.data?.msg || "Update failed");
-//     }
-//   };
-
-//   if (isLoading) {
-//     return <p className="p-6">Loading blog...</p>;
-//   }
-
-//   if (error) {
-//     return (
-//       <p className="p-6 text-red-500">
-//         Failed to load blog
-//       </p>
-//     );
-//   }
-
-//   return (
-//     <div className="max-w-4xl  px-2 py-4" >
-//       <h1 className="text-2xl font-bold text-primary mb-6 font-heading">
-//         Edit Blog 
-//       </h1>
-
-//       <form onSubmit={handleSubmit} className="space-y-5">
-
-//         <div>
-//           <label className="block mb-2 font-medium font-heading text-xl ">
-//             Blog Title
-//           </label>
-
-//           <input
-//             name="title"
-//             value={formData.title}
-//             onChange={handleChange}
-//             className="w-full border p-3 rounded-lg"
-//             placeholder="Enter title"
-//             required
-//           />
-//         </div>
-
-//         <div>
-//           <label className="block mb-2 font-medium font-heading text-xl ">
-//             Blog Content
-//           </label>
-
-//           <textarea
-//             name="content"
-//             value={formData.content}
-//             onChange={handleChange}
-//             rows={10}
-//             className="w-full border p-3 rounded-lg"
-//             placeholder="Write content..."
-//             required
-//           />
-//         </div>
-
-//         <button
-//           disabled={updateBlogMutation.isPending}
-//           className="bg-primary text-white px-6 py-3 rounded-sm font-semibold font-heading"
-//         >
-//           {updateBlogMutation.isPending
-//             ? "Updating..."
-//             : "Update Blog"}
-//         </button>
-//       </form>
-//     </div>
-//   );
-// }
-
-// export default EditBlog;
-
-
 
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
@@ -192,30 +76,36 @@ function EditBlog() {
     return <p className="p-6 text-red-500">Failed to load blog</p>;
 
   return (
-    <div className="max-w-4xl mx-auto p-6">
+    <div className="max-w-4xl  p-6">
 
-      <h1 className="text-3xl font-bold text-primary mb-6">
-        Edit Blog 🚀
+      <h1 className="text-3xl font-bold text-secondary mb-6 font-heading">
+        {blog?.title || "Untitled"}
       </h1>
 
       {/* ================= IMAGE ================= */}
       <div className="mb-6">
-        <p className="font-medium mb-2">Update Image</p>
+        <p className="font-medium mb-4 font-heading text-xl">
+          Update Image
+        </p>
 
         {blog?.image?.url && (
           <img
             src={blog.image.url}
             alt="blog"
-            className="w-40 h-40 object-cover rounded mb-3"
+            className="w-full h-60 object-cover rounded mb-3"
           />
         )}
 
-        <input type="file" onChange={handleImageChange} />
+        <input
+          className="w-full border p-3 rounded font-heading"
+          type="file"
+          onChange={handleImageChange}
+        />
 
         <button
           type="button"
           onClick={handleImageUpload}
-          className="mt-2 bg-black text-white px-4 py-2 rounded"
+          className="mt-2 bg-primary text-white px-4 py-2 rounded font-heading"
         >
           Upload Image
         </button>
@@ -225,7 +115,7 @@ function EditBlog() {
       <form onSubmit={handleSubmit} className="space-y-5">
 
         <div>
-          <label className="block mb-2 font-medium">
+          <label className="block mb-2 font-medium font-heading text-xl">
             Title
           </label>
 
@@ -238,7 +128,7 @@ function EditBlog() {
         </div>
 
         <div>
-          <label className="block mb-2 font-medium">
+          <label className="block mb-2 font-medium font-heading text-xl">
             Content
           </label>
 

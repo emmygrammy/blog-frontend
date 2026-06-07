@@ -65,11 +65,6 @@ export const updateBlogImage = async (id, formData) => {
   const response = await api.put(
     `/blog/${id}/update`,
     formData,
-    {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-    }
   )
 
   return response.data
