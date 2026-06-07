@@ -6,6 +6,7 @@ import {
   useUpdateBlog,
   useUpdateBlogImage,
 } from "../../hooks/UseBlog";
+import Loader from "../../components/Loader";
 
 function EditBlog() {
   const { id } = useParams();
@@ -70,7 +71,7 @@ function EditBlog() {
     navigate("/dashboard/manage");
   };
 
-  if (isLoading) return <p className="p-6">Loading...</p>;
+  if (isLoading) return <Loader title="Loading..." />;
 
   if (error)
     return <p className="p-6 text-red-500">Failed to load blog</p>;
