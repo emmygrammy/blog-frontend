@@ -15,6 +15,7 @@ import DashboardHome from '../pages/dashboard/DashboardHome'
 import CreateBlog from '../pages/dashboard/CreateBlog'
 import EditBlog from '../pages/dashboard/EditBlog'
 import ManageBlogs from '../pages/dashboard/ManageBlogs'
+import EditQuestion from '../pages/dashboard/EditQuestion'
 
 const AppRoutes = () => {
   return (
@@ -41,6 +42,7 @@ const AppRoutes = () => {
           <Route index element={<DashboardHome />} />
           <Route path="create" element={<CreateBlog />} />
           <Route path="edit/:id" element={<EditBlog />} />
+          <Route path="edit-question/:id" element={<EditQuestion />} />
           <Route path="manage" element={<ManageBlogs />} />
         </Route>
 

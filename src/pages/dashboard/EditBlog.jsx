@@ -7,12 +7,16 @@ import {
   useUpdateBlogImage,
 } from "../../hooks/UseBlog";
 import Loader from "../../components/Loader";
+import toast from "react-hot-toast";
+import Spinner from "../../components/Spinner";
 
 function EditBlog() {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  const { data: blog, isLoading, error } = useBlog(id);
+  const { data, isLoading, error } = useBlog(id);
+  const blog = data;
+  
 
   const updateBlogMutation = useUpdateBlog();
   const updateImageMutation = useUpdateBlogImage();
@@ -23,16 +27,18 @@ function EditBlog() {
   });
 
   const [image, setImage] = useState(null);
+  
 
   // ✅ SAFE WAY: useEffect instead of setState in render
+  
   useEffect(() => {
-    if (blog) {
-      setFormData({
-        title: blog.title || "",
-        content: blog.content || "",
-      });
-    }
-  }, [blog]);
+  if (!data) return;
+
+  setFormData({
+    title: data.title ?? "",
+    content: data.content ?? "",
+  });
+}, [data]);
 
   const handleChange = (e) => {
     setFormData((prev) => ({
@@ -46,7 +52,7 @@ function EditBlog() {
   };
 
   const handleImageUpload = async () => {
-    if (!image) return alert("Please select an image");
+    if (!image) return toast.error("Please select an image");
 
     const fd = new FormData();
     fd.append("image", image);
@@ -56,7 +62,7 @@ function EditBlog() {
       data: fd,
     });
 
-    alert("Image updated successfully");
+    toast.success("Image updated successfully");
   };
 
   const handleSubmit = async (e) => {
@@ -67,7 +73,7 @@ function EditBlog() {
       data: formData,
     });
 
-    alert("Blog updated successfully");
+    toast.success("Blog updated successfully");
     navigate("/dashboard/manage");
   };
 
@@ -106,9 +112,13 @@ function EditBlog() {
         <button
           type="button"
           onClick={handleImageUpload}
-          className="mt-2 bg-primary text-white px-4 py-2 rounded font-heading"
+          disabled={updateImageMutation.isPending}
+          className="mt-2 bg-primary text-white px-4 py-2 rounded flex items-center gap-2 disabled:opacity-50"
         >
-          Upload Image
+          {updateImageMutation.isPending && <Spinner />}
+          {updateImageMutation.isPending
+            ? "Uploading..."
+            : "Upload Image"}
         </button>
       </div>
 
@@ -144,11 +154,18 @@ function EditBlog() {
 
         <button
           disabled={updateBlogMutation.isPending}
-          className="bg-primary text-white px-6 py-3 rounded"
+          type="submit"
+          className="bg-primary font-normal font-heading text-white px-6 py-3 rounded flex items-center gap-2 disabled:opacity-50"
         >
-          {updateBlogMutation.isPending
-            ? "Updating..."
-            : "Update Blog"}
+          {updateBlogMutation.isPending?(
+            <>
+            <Spinner />
+            Updating...
+            </>
+          ):(
+            "Update Blog"
+          )}
+          
         </button>
       </form>
     </div>

@@ -1,5 +1,7 @@
 import { useState,useEffect } from "react";
 import Input from "../../components/Input";
+import toast from "react-hot-toast";
+import Spinner from "../../components/Spinner";
 
 
 import { createBlog, uploadBlogImage, getAllBlogs  } from "../../api/BlogApi";
@@ -7,6 +9,7 @@ import { createQuestion } from "../../api/cbtApi";
 
 export default function CreateBlog() {
   const [activeForm, setActiveForm] = useState("news");
+  
 
   return (
     <div>
@@ -110,53 +113,92 @@ function CreateNewsBlog() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [image, setImage] = useState(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
 
-    try {
-      // 1. Create blog first
-      const createdBlog = await createBlog({
-        title,
-        content,
-      });
+  //   try {
+  //     // 1. Create blog first
+  //     const createdBlog = await createBlog({
+  //       title,
+  //       content,
+  //     });
 
-      console.log("CREATED BLOG:", createdBlog);
+  //     console.log("CREATED BLOG:", createdBlog);
 
-      // 2. SAFETY CHECK (VERY IMPORTANT)
-      if (!createdBlog?._id) {
-        alert("Blog creation failed - no ID returned");
-        return;
-      }
+  //     // 2. SAFETY CHECK (VERY IMPORTANT)
+  //     if (!createdBlog?._id) {
+  //       alert("Blog creation failed - no ID returned");
+  //       return;
+  //     }
 
-      // 3. Upload image ONLY if selected
-      if (image) {
-        const formData = new FormData();
-        formData.append("image", image);
+  //     // 3. Upload image ONLY if selected
+  //     if (image) {
+  //       const formData = new FormData();
+  //       formData.append("image", image);
 
-        const uploadResponse = await uploadBlogImage(
-          createdBlog._id,
-          formData
-        );
+  //       const uploadResponse = await uploadBlogImage(
+  //         createdBlog._id,
+  //         formData
+  //       );
 
-        console.log("UPLOAD RESPONSE:", uploadResponse);
-      }
+  //       console.log("UPLOAD RESPONSE:", uploadResponse);
+  //     }
 
-      alert("Blog created successfully");
+  //     alert("Blog created successfully");
 
-      // 4. Reset form
-      setTitle("");
-      setContent("");
-      setImage(null);
+  //     // 4. Reset form
+  //     setTitle("");
+  //     setContent("");
+  //     setImage(null);
 
-      // OPTIONAL: refresh UI if needed
-      // window.location.reload();
+  //     // OPTIONAL: refresh UI if needed
+  //     // window.location.reload();
 
-    } catch (error) {
-      console.log(error.response?.data || error);
-      alert("Failed to create blog");
+  //   } catch (error) {
+  //     console.log(error.response?.data || error);
+  //     alert("Failed to create blog");
+  //   }
+  // };
+const handleSubmit = async (e) => {
+  e.preventDefault();
+
+  setIsSubmitting(true);
+
+  try {
+    const createdBlog = await createBlog({
+      title,
+      content,
+    });
+
+    if (!createdBlog?._id) {
+      toast.error("Blog creation failed");
+      return;
     }
-  };
+
+    if (image) {
+      const formData = new FormData();
+      formData.append("image", image);
+
+      await uploadBlogImage(
+        createdBlog._id,
+        formData
+      );
+    }
+
+    toast.success("Blog created successfully");
+
+    setTitle("");
+    setContent("");
+    setImage(null);
+  } catch (error) {
+    console.log(error.response?.data || error);
+    toast.error("Failed to create blog");
+  } finally {
+    setIsSubmitting(false);
+  }
+};
 
   return (
     <form onSubmit={handleSubmit} className="bg-gray-100 p-6 rounded-xl">
@@ -182,9 +224,14 @@ function CreateNewsBlog() {
         className="mb-4"
       />
 
-      <button className="bg-primary text-white px-5 py-2 rounded">
-        Submit
-      </button>
+      <button
+          type="submit"
+          disabled={isSubmitting}
+          className="bg-primary text-white px-5 py-2 rounded disabled:opacity-50 flex items-center gap-2"
+        >
+          {isSubmitting && <Spinner />}
+          {isSubmitting ? "Creating..." : "Submit"}
+       </button>
     </form>
   );
 }
@@ -243,54 +290,106 @@ function CreateCbtBlog() {
   const [optionD, setOptionD] = useState("");
   const [correctAnswer, setCorrectAnswer] = useState("");
   const [explanation, setExplanation] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
 
-    try {
-      // 🔥 VALIDATION (prevents backend 400 error)
-      if (
-        !question ||
-        !optionA ||
-        !optionB ||
-        !optionC ||
-        !optionD ||
-        !correctAnswer
-      ) {
-        alert("Please fill all required fields");
-        return;
-      }
+  //   try {
+  //     // 🔥 VALIDATION (prevents backend 400 error)
+  //     if (
+  //       !question ||
+  //       !optionA ||
+  //       !optionB ||
+  //       !optionC ||
+  //       !optionD ||
+  //       !correctAnswer
+  //     ) {
+  //       alert("Please fill all required fields");
+  //       return;
+  //     }
 
-      const payload = {
-        question,
-        options: {
-          A: optionA,
-          B: optionB,
-          C: optionC,
-          D: optionD,
-        },
-        correctAnswer,
-        explanation,
-      };
+  //     const payload = {
+  //       question,
+  //       options: {
+  //         A: optionA,
+  //         B: optionB,
+  //         C: optionC,
+  //         D: optionD,
+  //       },
+  //       correctAnswer,
+  //       explanation,
+  //     };
 
-      await createQuestion(payload);
+  //     await createQuestion(payload);
 
-      alert("Question created successfully");
+  //     alert("Question created successfully");
 
-      // reset form
-      setQuestion("");
-      setOptionA("");
-      setOptionB("");
-      setOptionC("");
-      setOptionD("");
-      setCorrectAnswer("");
-      setExplanation("");
-    } catch (error) {
-      console.log(error.response?.data);
-      alert(error.response?.data?.message || "Failed to create question");
-    }
-  };
+  //     // reset form
+  //     setQuestion("");
+  //     setOptionA("");
+  //     setOptionB("");
+  //     setOptionC("");
+  //     setOptionD("");
+  //     setCorrectAnswer("");
+  //     setExplanation("");
+  //   } catch (error) {
+  //     console.log(error.response?.data);
+  //     alert(error.response?.data?.message || "Failed to create question");
+  //   }
+  // };
+const handleSubmit = async (e) => {
+  e.preventDefault();
 
+  if (
+    !question ||
+    !optionA ||
+    !optionB ||
+    !optionC ||
+    !optionD ||
+    !correctAnswer
+  ) {
+    toast.error("Please fill all required fields");
+    return;
+  }
+
+  setIsSubmitting(true);
+
+  try {
+    const payload = {
+      question,
+      options: {
+        A: optionA,
+        B: optionB,
+        C: optionC,
+        D: optionD,
+      },
+      correctAnswer,
+      explanation,
+    };
+
+    await createQuestion(payload);
+
+    toast.success("Question created successfully");
+
+    setQuestion("");
+    setOptionA("");
+    setOptionB("");
+    setOptionC("");
+    setOptionD("");
+    setCorrectAnswer("");
+    setExplanation("");
+  } catch (error) {
+    console.log(error.response?.data);
+
+    toast.error(
+      error.response?.data?.message ||
+      "Failed to create question"
+    );
+  } finally {
+    setIsSubmitting(false);
+  }
+};
   return (
     <form onSubmit={handleSubmit} className="bg-gray-100 p-6 rounded-xl">
       <h1 className="text-2xl font-bold mb-5">Create CBT Question</h1>
@@ -354,11 +453,13 @@ function CreateCbtBlog() {
       />
 
       <button
-        type="submit"
-        className="bg-primary text-white px-5 py-2 rounded"
-      >
-        Submit
-      </button>
+            type="submit"
+            disabled={isSubmitting}
+            className="bg-primary text-white px-5 py-2 rounded disabled:opacity-50 flex items-center gap-2"
+          >
+            {isSubmitting && <Spinner />}
+            {isSubmitting ? "Creating..." : "Submit"}
+        </button>
     </form>
   );
 }

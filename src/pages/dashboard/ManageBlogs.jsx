@@ -1,14 +1,18 @@
 import {useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import DeleteModal from "../../components/DeleteModal";
 import Loader from "../../components/Loader";
 import { useBlogs, useDeleteBlog } from "../../hooks/UseBlog";
 import { useQuestions, useDeleteQuestion } from "../../hooks/UseQuestions";
 import { Link } from "react-router-dom";
+import toast from "react-hot-toast";
 
 
 
 function ManageContent() {
-  const [activeTab, setActiveTab] = useState("news");
+  const [searchParams] = useSearchParams();
+  const tab = searchParams.get("tab") || "news";
+  const [activeTab, setActiveTab] = useState(tab);
 
 // Get all blogs
   const {
@@ -30,6 +34,9 @@ const questions = questionsData?.questions || [];
 
   const deleteBlogMutation = useDeleteBlog();
   const deleteQuestionMutation = useDeleteQuestion();
+  const isDeleting =
+  deleteBlogMutation.isPending ||
+  deleteQuestionMutation.isPending;
   
 
   // MODAL STATE
@@ -40,35 +47,54 @@ const questions = questionsData?.questions || [];
   
   // ================= DELETE LOGIC (NO UI HERE) =================
   // Delete blog or question
+// const handleConfirmDelete = async () => {
+//   try {
+//     if (deleteType === "question") {
+//       await deleteQuestionMutation.mutateAsync(selectedId);
+//     }
+
+//     if (deleteType === "blog") {
+//       await deleteBlogMutation.mutateAsync(selectedId);
+//     }
+
+//     setShowDeleteModal(false);
+//     setSelectedId(null);
+//     setDeleteType(null);
+//   } catch (error) {
+//     console.log(error);
+//   }
+// };
+
 const handleConfirmDelete = async () => {
   try {
     if (deleteType === "question") {
       await deleteQuestionMutation.mutateAsync(selectedId);
+      toast.success("Question deleted successfully");
     }
 
     if (deleteType === "blog") {
       await deleteBlogMutation.mutateAsync(selectedId);
+      toast.success("Blog deleted successfully");
     }
 
     setShowDeleteModal(false);
     setSelectedId(null);
     setDeleteType(null);
   } catch (error) {
+    toast.error("Failed to delete item");
     console.log(error);
   }
 };
 
 
-
-  
   if (blogsLoading || questionsLoading) {
   return <Loader text="Loading dashboard..." />;
 }
 
 if (blogsError || questionsError) {
   return (
-    <div>
-      Failed to load content
+    <div className="bg-red-50 text-red-600 p-4 rounded">
+      Failed to load content. Please refresh the page.
     </div>
   );
 }
@@ -245,6 +271,7 @@ if (blogsError || questionsError) {
       {/* ================= DELETE MODAL ================= */}
       <DeleteModal
         isOpen={showDeleteModal}
+         isLoading={isDeleting}
         title={`Delete ${deleteType === "blog" ? "Blog" : "Question"}`}
         message={`Are you sure you want to delete this ${deleteType}?`}
         onClose={() => {

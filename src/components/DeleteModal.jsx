@@ -4,6 +4,7 @@ function DeleteModal({
   message = "Are you sure you want to delete this item?",
   onConfirm,
   onClose,
+  isLoading = false,
 }) {
   if (!isOpen) return null;
 
@@ -24,16 +25,18 @@ function DeleteModal({
 
           <button
             onClick={onClose}
-            className="px-4 py-2 rounded border border-gray-300"
+            disabled={isLoading}
+            className="px-4 py-2 rounded border border-gray-300 disabled:opacity-50"
           >
             Cancel
           </button>
 
           <button
             onClick={onConfirm}
-            className="bg-red-600 text-white px-4 py-2 rounded"
+            disabled={isLoading}
+            className="bg-red-600 text-white px-4 py-2 rounded disabled:opacity-50"
           >
-            Delete
+            {isLoading ? "Deleting..." : "Delete"}
           </button>
 
         </div>
