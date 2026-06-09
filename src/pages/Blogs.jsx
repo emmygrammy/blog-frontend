@@ -2,10 +2,15 @@ import TopSection from "../components/TopSection";
 import { useQuestions } from "../hooks/UseQuestions";
 import Loader from "../components/Loader";
 import { useBlogs } from "../hooks/UseBlog";
+import { Link } from "react-router-dom";
+import { useState } from "react";
+
+
 
 function Blogs() {
   const { data: questionsData } = useQuestions();
   const questions = questionsData?.questions || [];
+  const [openCbt, setOpenCbt] = useState(null);
 
   const {
     data: blogs = [],
@@ -73,9 +78,11 @@ function Blogs() {
                       {blog.content?.slice(0, 100)}...
                     </p>
 
-                    <button className="mt-4 text-primary font-medium text-sm">
+                    <Link 
+                    to={`/blogs/${blog._id}`}
+                    className="mt-4 text-primary font-medium text-sm">
                       Read more →
-                    </button>
+                    </Link>
                   </div>
                 </div>
               ))}
@@ -87,34 +94,73 @@ function Blogs() {
 
         {/* CBT SECTION */}
         <section>
-          <h2 className="text-2xl font-bold text-secondary mb-6">
-            🧠 CBT Practice Questions
-          </h2>
+            <h2 className="text-2xl font-bold text-secondary mb-6">
+              CBT Practice Questions
+            </h2>
 
-          {questions.length > 0 ? (
-            <div className="space-y-4">
-              {questions.slice(0, 5).map((q, index) => (
-                <div
-                  key={q._id}
-                  className="bg-white shadow rounded-lg p-4 border-l-4 border-primary"
-                >
-                  <p className="font-semibold">
-                    {index + 1}. {q.question}
-                  </p>
+            {questions.length > 0 ? (
+              <div className="space-y-4">
+                {questions.slice(0, 5).map((q, index) => (
+                  <div
+                    key={q._id}
+                    className="bg-white shadow rounded-lg p-4 border-l-4 border-primary"
+                  >
+                    {/* Question */}
+                    <p className="font-semibold">
+                      {index + 1}. {q.question}
+                    </p>
 
-                  <div className="mt-2 text-sm text-gray-600 space-y-1">
-                    <p>A. {q.options.A}</p>
-                    <p>B. {q.options.B}</p>
-                    <p>C. {q.options.C}</p>
-                    <p>D. {q.options.D}</p>
+                    {/* Always show options */}
+                    <div className="mt-3 text-sm text-gray-600 space-y-1">
+                      <p>A. {q.options.A}</p>
+                      <p>B. {q.options.B}</p>
+                      <p>C. {q.options.C}</p>
+                      <p>D. {q.options.D}</p>
+                    </div>
+
+                    {/* Toggle Button */}
+                    <button
+                      onClick={() =>
+                        setOpenCbt(openCbt === q._id ? null : q._id)
+                      }
+                      className="mt-4 text-primary font-medium text-sm"
+                    >
+                      {openCbt === q._id
+                        ? "Hide Answer ▲"
+                        : "View Answer ▼"}
+                    </button>
+
+                    {/* Hidden Section */}
+                    {openCbt === q._id && (
+                      <div className="mt-4 space-y-3">
+                        <div className="p-3 bg-green-50 rounded">
+                          <p className="font-semibold text-green-700">
+                            Correct Answer: {q.correctAnswer}
+                          </p>
+                        </div>
+
+                        {q.explanation && (
+                          <div className="p-3 bg-blue-50 rounded">
+                            <p className="font-medium mb-1">
+                              Explanation
+                            </p>
+
+                            <p className="text-gray-700">
+                              {q.explanation}
+                            </p>
+                          </div>
+                        )}
+                      </div>
+                    )}
                   </div>
-                </div>
-              ))}
-            </div>
-          ) : (
-            <p className="text-gray-500">No CBT questions available</p>
-          )}
-        </section>
+                ))}
+              </div>
+            ) : (
+              <p className="text-gray-500">
+                No CBT questions available
+              </p>
+            )}
+    </section>
       </div>
     </>
   );
