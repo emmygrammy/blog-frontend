@@ -1,41 +1,32 @@
-import { useEffect, useState } from "react";
 import TopSection from "../components/TopSection";
-import { getAllBlogs } from "../api/BlogApi";
 import { useQuestions } from "../hooks/UseQuestions";
 import Loader from "../components/Loader";
+import { useBlogs } from "../hooks/UseBlog";
 
 function Blogs() {
-  const [blogs, setBlogs] = useState([]);
-  const [loading, setLoading] = useState(true);
-
-  // CBT (optional section)
   const { data: questionsData } = useQuestions();
   const questions = questionsData?.questions || [];
 
-  useEffect(() => {
-    const fetchBlogs = async () => {
-      try {
-        const data = await getAllBlogs();
+  const {
+    data: blogs = [],
+    isLoading: blogsLoading,
+    error: blogsError,
+  } = useBlogs();
 
-        // supports both formats (array or {posts: []})
-        setBlogs(data?.posts || data || []);
-      } catch (error) {
-        console.log(error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchBlogs();
-  }, []);
-
-  if (loading) {
+  if (blogsLoading) {
     return <Loader text="Loading content..." />;
+  }
+
+  if (blogsError) {
+    return (
+      <div className="text-center py-10 text-red-500">
+        Failed to load blogs
+      </div>
+    );
   }
 
   return (
     <>
-      {/* ================= HERO SECTION ================= */}
       <TopSection
         className="text-center md:text-left"
         title="Learning Hub"
@@ -44,7 +35,7 @@ function Blogs() {
 
       <div className="max-w-7xl mx-auto px-4 py-10 space-y-16">
 
-        {/* ================= NEWS BLOG SECTION ================= */}
+        {/* NEWS SECTION */}
         <section>
           <div className="flex items-center justify-between mb-6">
             <h2 className="text-2xl font-bold text-secondary">
@@ -59,7 +50,6 @@ function Blogs() {
                   key={blog._id}
                   className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition"
                 >
-                  {/* IMAGE */}
                   <div className="h-48 bg-gray-200">
                     {blog.image?.url ? (
                       <img
@@ -74,7 +64,6 @@ function Blogs() {
                     )}
                   </div>
 
-                  {/* CONTENT */}
                   <div className="p-4">
                     <h3 className="font-bold text-lg text-secondary">
                       {blog.title}
@@ -96,7 +85,7 @@ function Blogs() {
           )}
         </section>
 
-        {/* ================= CBT SECTION ================= */}
+        {/* CBT SECTION */}
         <section>
           <h2 className="text-2xl font-bold text-secondary mb-6">
             🧠 CBT Practice Questions
@@ -126,7 +115,6 @@ function Blogs() {
             <p className="text-gray-500">No CBT questions available</p>
           )}
         </section>
-
       </div>
     </>
   );
