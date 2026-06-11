@@ -156,7 +156,7 @@ function Blogs() {
                 ))}
               </div>
             ) : (
-              <p className="text-gray-500 font-heading">
+              <p className="text-gray-500 font-heading text-center">
                 No CBT questions available
               </p>
             )}
