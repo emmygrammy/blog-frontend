@@ -17,7 +17,7 @@ function NotFound() {
         </h2>
 
         {/* Message */}
-        <p className="text-gray-600 mt-3 mb-6">
+        <p className="text-gray-600 mt-3 mb-6 font-heading">
           Sorry, the page you are looking for doesn’t exist or has been moved.
         </p>
 
