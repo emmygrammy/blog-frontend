@@ -24,7 +24,7 @@ function NotFound() {
         {/* Button */}
         <Link
           to="/"
-          className="inline-block font-heading font-semibold bg-primary text-white px-6 py-3 rounded-full shadow-md hover:bg-primary transition-colors"
+          className="inline-block font-heading bg-primary text-white px-6 py-3 rounded-full shadow-md hover:bg-primary transition-colors"
         >
           Go Back Home
         </Link>
